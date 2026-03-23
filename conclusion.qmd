@@ -29,6 +29,14 @@ The three features with the most discriminatory power are Tempo (120–128 vs 13
 
 These findings are relevant for several audiences. DJs and curators could apply similar feature-based approaches to sort large music libraries, identify tracks that bridge genres, or discover unexpected overlaps between playlists. Music producers gain concrete insight into which measurable properties define genre identity, helping them position their tracks within or across genre boundaries. Researchers in Music Information Retrieval can see how standard Spotify features perform on a focused, two-genre classification task, and importantly, where those features fall short. Spotify's features say nothing about arrangement, mixing technique, sound design, or cultural context, all of which are central to how listeners and practitioners actually experience these genres.
 
+## What I Learned
+
+Working through this portfolio taught me to approach music analytically without losing sight of what makes it meaningful as a listener and DJ. The course introduced standard MIR tools (chroma features, MFCCs, key estimation, classification) in the context of well-known examples, but applying them to my own corpus required adapting each method to a domain where the differences are more subtle than, say, comparing classical music to pop.
+
+One example of this is the reduced-model experiment in Week 12. The course covered random forests and feature importance as general tools, but I independently decided to test whether a minimal subset of features could match the full model's accuracy. The result (five features performing as well as ten) was not something the course explicitly demonstrated, and it gave me a concrete answer to the question of which features actually matter for this genre pair.
+
+Similarly, combining supervised and unsupervised methods on the same data was my own decision. The course taught each technique separately, but applying both to the same corpus and comparing the results (the classifier's near-perfect accuracy and the dendrogram's clean two-branch structure) provided a form of converging evidence that neither method could offer alone. This kind of methodological triangulation is something I now see as essential for drawing credible conclusions from computational analyses.
+
 ## Limitations & Future Work
 
 This analysis relies entirely on Spotify's proprietary audio features and on chroma and timbre exports from Sonic Visualiser. Both are approximations. Spotify's features are black-box estimates that may not correspond to perceptual or musicological categories, and the Sonic Visualiser exports depend on algorithm-specific assumptions about tuning, windowing, and spectral resolution.

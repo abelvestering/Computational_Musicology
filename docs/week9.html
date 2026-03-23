@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#self-similarity-matrices" id="toc-self-similarity-matrices" class="nav-link active" data-scroll-target="#self-similarity-matrices">Self-Similarity Matrices</a></li>
   <li><a href="#chroma-self-similarity-wood" id="toc-chroma-self-similarity-wood" class="nav-link" data-scroll-target="#chroma-self-similarity-wood">Chroma Self-Similarity: Wood</a></li>
   <li><a href="#chroma-vs-timbre-bloed-zweet-en-tranen" id="toc-chroma-vs-timbre-bloed-zweet-en-tranen" class="nav-link" data-scroll-target="#chroma-vs-timbre-bloed-zweet-en-tranen">Chroma vs Timbre: Bloed, Zweet en Tranen</a></li>
-  <li><a href="#cepstrogram-bloed-zweet-en-tranen" id="toc-cepstrogram-bloed-zweet-en-tranen" class="nav-link" data-scroll-target="#cepstrogram-bloed-zweet-en-tranen">Cepstrogram: Bloed, Zweet en Tranen</a></li>
+  <li><a href="#cepstrogram-east-bridge-romance" id="toc-cepstrogram-east-bridge-romance" class="nav-link" data-scroll-target="#cepstrogram-east-bridge-romance">Cepstrogram: East Bridge Romance</a></li>
   </ul>
 </nav>
 </nav>
@@ -337,44 +337,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Comparing the two SSMs shows that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM has clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular. Even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. A track can be harmonically stable while remaining texturally dynamic, and chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.</p>
 </section>
-<section id="cepstrogram-bloed-zweet-en-tranen" class="level2">
-<h2 class="anchored" data-anchor-id="cepstrogram-bloed-zweet-en-tranen">Cepstrogram: Bloed, Zweet en Tranen</h2>
-<p>A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible.</p>
+<section id="cepstrogram-east-bridge-romance" class="level2">
+<h2 class="anchored" data-anchor-id="cepstrogram-east-bridge-romance">Cepstrogram: East Bridge Romance</h2>
+<p>A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible. This cepstrogram analyses <em>East Bridge Romance</em>, a Hard House track from the corpus, connecting the timbre analysis directly to the chroma analysis in Week 8.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Cepstrogram: Bloed, Zweet en Tranen (MFCCs, per-coefficient scaled)</summary>
+<summary>Cepstrogram: East Bridge Romance (MFCCs, per-coefficient scaled)</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read MFCC data exported from Sonic Visualiser (libextract MFCCs)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bzt_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-timbre.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>eb_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"eastbridge-timbre.csv"</span>, <span class="at">show_col_types =</span> F)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>bin_cols <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"BIN"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample for readability (every 5th frame)</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>bzt_ds <span class="ot">&lt;-</span> bzt_timbre[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(bzt_timbre), <span class="at">by =</span> <span class="dv">5</span>), ]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>eb_ds <span class="ot">&lt;-</span> eb_timbre[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(eb_timbre), <span class="at">by =</span> <span class="dv">5</span>), ]</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale each MFCC coefficient independently to 0–1 range</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale each MFCC coefficient independently to 0-1 range</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># This ensures all bins contribute equally to the visualisation</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>bzt_scaled <span class="ot">&lt;-</span> bzt_ds</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>eb_scaled <span class="ot">&lt;-</span> eb_ds</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> bin_cols) {</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> bzt_ds[[col]]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> eb_ds[[col]]</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(vals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (rng[<span class="dv">2</span>] <span class="sc">&gt;</span> rng[<span class="dv">1</span>]) {</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> (vals <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    eb_scaled[[col]] <span class="ot">&lt;-</span> (vals <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    eb_scaled[[col]] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot to long format for ggplot</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>bzt_long <span class="ot">&lt;-</span> bzt_scaled <span class="sc">|&gt;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>eb_long <span class="ot">&lt;-</span> eb_scaled <span class="sc">|&gt;</span></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">all_of</span>(bin_cols), <span class="at">names_to =</span> <span class="st">"MFCC"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MFCC =</span> <span class="fu">factor</span>(MFCC, <span class="at">levels =</span> <span class="fu">rev</span>(bin_cols)))</span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bzt_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> MFCC, <span class="at">fill =</span> Value)) <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(eb_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> MFCC, <span class="at">fill =</span> Value)) <span class="sc">+</span></span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cepstrogram: Bloed, Zweet en Tranen"</span>,</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Per-coefficient scaled MFCCs over time"</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cepstrogram: East Bridge Romance"</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Per-coefficient scaled MFCCs over time | Hard House"</span>,</span>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
@@ -385,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The cepstrogram reveals which timbral dimensions change over the course of the track. <strong>BIN 1</strong> (the overall spectral energy) shows clear sectional boundaries, with visible shifts corresponding to verse–chorus transitions. Higher-order coefficients (BIN 2 onward) capture finer textural details: for instance, BIN 2 often tracks the balance between low and high frequency energy, meaning that moments where this coefficient shifts sharply correspond to changes in vocal intensity or the introduction of new instruments. The cepstrogram complements the timbre SSM by showing <em>which</em> timbral dimensions change, rather than just <em>when</em> they change.</p>
+<p>The cepstrogram of <em>East Bridge Romance</em> reveals how timbral texture evolves across the track. BIN 1 (overall spectral energy) shows clear sectional boundaries that align with the structural transitions visible in the Week 8 chromagram: the drops appear as sudden shifts in lower-order coefficients, while the breakdowns show reduced activity across nearly all bins. Higher-order coefficients (BIN 5 onward) capture finer textural details like the presence of hi-hats, synth textures, and reverb tails. What stands out is that the timbral palette of the track changes more continuously than its harmonic content, reinforcing the observation from the SSM analysis that Hard House structure is driven by textural contrast rather than harmonic development.</p>
 
 
 <!-- -->
@@ -979,52 +979,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>Comparing the two SSMs shows that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM has clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular. Even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. A track can be harmonically stable while remaining texturally dynamic, and chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.</span>
 <span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cepstrogram: Bloed, Zweet en Tranen</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cepstrogram: East Bridge Romance</span></span>
 <span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible.</span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible. This cepstrogram analyses *East Bridge Romance*, a Hard House track from the corpus, connecting the timbre analysis directly to the chroma analysis in Week 8.</span>
 <span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Cepstrogram: Bloed, Zweet en Tranen (MFCCs, per-coefficient scaled)"</span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Cepstrogram: East Bridge Romance (MFCCs, per-coefficient scaled)"</span></span>
 <span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
 <span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
 <span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
 <span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a><span class="co"># Read MFCC data exported from Sonic Visualiser (libextract MFCCs)</span></span>
-<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>bzt_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-timbre.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>eb_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"eastbridge-timbre.csv"</span>, <span class="at">show_col_types =</span> F)</span>
 <span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>bin_cols <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"BIN"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>)</span>
 <span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample for readability (every 5th frame)</span></span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>bzt_ds <span class="ot">&lt;-</span> bzt_timbre[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(bzt_timbre), <span class="at">by =</span> <span class="dv">5</span>), ]</span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>eb_ds <span class="ot">&lt;-</span> eb_timbre[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(eb_timbre), <span class="at">by =</span> <span class="dv">5</span>), ]</span>
 <span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale each MFCC coefficient independently to 0–1 range</span></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale each MFCC coefficient independently to 0-1 range</span></span>
 <span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="co"># This ensures all bins contribute equally to the visualisation</span></span>
-<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>bzt_scaled <span class="ot">&lt;-</span> bzt_ds</span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>eb_scaled <span class="ot">&lt;-</span> eb_ds</span>
 <span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> bin_cols) {</span>
-<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> bzt_ds[[col]]</span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> eb_ds[[col]]</span>
 <span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(vals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (rng[<span class="dv">2</span>] <span class="sc">&gt;</span> rng[<span class="dv">1</span>]) {</span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> (vals <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>    eb_scaled[[col]] <span class="ot">&lt;-</span> (vals <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
 <span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>    eb_scaled[[col]] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot to long format for ggplot</span></span>
-<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>bzt_long <span class="ot">&lt;-</span> bzt_scaled <span class="sc">|&gt;</span></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>eb_long <span class="ot">&lt;-</span> eb_scaled <span class="sc">|&gt;</span></span>
 <span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">all_of</span>(bin_cols), <span class="at">names_to =</span> <span class="st">"MFCC"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MFCC =</span> <span class="fu">factor</span>(MFCC, <span class="at">levels =</span> <span class="fu">rev</span>(bin_cols)))</span>
 <span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bzt_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> MFCC, <span class="at">fill =</span> Value)) <span class="sc">+</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(eb_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> MFCC, <span class="at">fill =</span> Value)) <span class="sc">+</span></span>
 <span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
 <span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
 <span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cepstrogram: Bloed, Zweet en Tranen"</span>,</span>
-<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Per-coefficient scaled MFCCs over time"</span>,</span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cepstrogram: East Bridge Romance"</span>,</span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Per-coefficient scaled MFCCs over time | Hard House"</span>,</span>
 <span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
 <span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a>The cepstrogram reveals which timbral dimensions change over the course of the track. **BIN 1** (the overall spectral energy) shows clear sectional boundaries, with visible shifts corresponding to verse–chorus transitions. Higher-order coefficients (BIN 2 onward) capture finer textural details: for instance, BIN 2 often tracks the balance between low and high frequency energy, meaning that moments where this coefficient shifts sharply correspond to changes in vocal intensity or the introduction of new instruments. The cepstrogram complements the timbre SSM by showing *which* timbral dimensions change, rather than just *when* they change.</span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a>The cepstrogram of *East Bridge Romance* reveals how timbral texture evolves across the track. BIN 1 (overall spectral energy) shows clear sectional boundaries that align with the structural transitions visible in the Week 8 chromagram: the drops appear as sudden shifts in lower-order coefficients, while the breakdowns show reduced activity across nearly all bins. Higher-order coefficients (BIN 5 onward) capture finer textural details like the presence of hi-hats, synth textures, and reverb tails. What stands out is that the timbral palette of the track changes more continuously than its harmonic content, reinforcing the observation from the SSM analysis that Hard House structure is driven by textural contrast rather than harmonic development.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

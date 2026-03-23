@@ -72,6 +72,27 @@ gridExtra::grid.arrange(p1, p2, p3, ncol = 3)
 
 All three density plots show distinct peaks per genre. Tempo provides the cleanest separation, with almost no overlap between 128 and 138 BPM, creating a natural decision boundary. Energy separates well too, though Minimal Tech House shows a wider spread: some tracks push toward higher energy while remaining structurally minimal. Loudness reveals a fundamental difference in mastering philosophy. Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice.
 
+## Loudness at the Track Level
+
+To examine the loudness difference in more detail, a combined violin and boxplot compares the full distribution of track-level loudness values across both genres. The violin shape shows the density, while the boxplot inside highlights the median, interquartile range, and outliers.
+
+```{r}
+#| code-summary: "Violin + boxplot: loudness per genre"
+#| fig-width: 8
+#| fig-height: 5
+#| out-width: "100%"
+ggplot(corpus, aes(x = Genre, y = Loudness, fill = Genre)) +
+  geom_violin(alpha = 0.4, colour = NA) +
+  geom_boxplot(width = 0.15, outlier.size = 1, alpha = 0.8) +
+  scale_fill_manual(values = pal, guide = "none") +
+  theme_freq(13) +
+  labs(title = "Track-Level Loudness by Genre",
+       subtitle = "Violin + boxplot | 861 tracks",
+       x = NULL, y = "Loudness (dB)")
+```
+
+The violin plot makes the distributional difference even clearer than the density plot above. Hard House tracks are tightly compressed into a narrow band around −6 dB, with very few outliers. The median sits noticeably higher than Minimal Tech House, whose distribution is wider and centred around −10 dB. The narrowness of the Hard House violin reflects a genre-wide mastering convention: every track is pushed to a similar loudness ceiling. Minimal Tech House allows for more variation, which is consistent with its emphasis on dynamics and textural subtlety rather than raw impact.
+
 ## Chroma Features: East Bridge Romance
 
 The chromagram is generated from NNLS Chroma features exported via Sonic Visualiser. Each row represents a pitch class (C through B), and each column a time frame. Intensity is mapped to colour using the viridis palette, producing a heatmap of harmonic activity over time.

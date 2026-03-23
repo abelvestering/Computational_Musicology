@@ -133,49 +133,49 @@ ggplot(ssm_t, aes(x = TimeX, y = TimeY, fill = Distance)) +
 
 Comparing the two SSMs shows that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM has clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular. Even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. A track can be harmonically stable while remaining texturally dynamic, and chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.
 
-## Cepstrogram: Bloed, Zweet en Tranen
+## Cepstrogram: East Bridge Romance
 
-A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible.
+A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible. This cepstrogram analyses *East Bridge Romance*, a Hard House track from the corpus, connecting the timbre analysis directly to the chroma analysis in Week 8.
 
 ```{r}
-#| code-summary: "Cepstrogram: Bloed, Zweet en Tranen (MFCCs, per-coefficient scaled)"
+#| code-summary: "Cepstrogram: East Bridge Romance (MFCCs, per-coefficient scaled)"
 #| fig-width: 12
 #| fig-height: 5
 #| out-width: "100%"
 
 # Read MFCC data exported from Sonic Visualiser (libextract MFCCs)
-bzt_timbre <- read_csv("bzt-timbre.csv", show_col_types = F)
+eb_timbre <- read_csv("eastbridge-timbre.csv", show_col_types = F)
 bin_cols <- paste("BIN", 1:21)
 
 # Downsample for readability (every 5th frame)
-bzt_ds <- bzt_timbre[seq(1, nrow(bzt_timbre), by = 5), ]
+eb_ds <- eb_timbre[seq(1, nrow(eb_timbre), by = 5), ]
 
-# Scale each MFCC coefficient independently to 0–1 range
+# Scale each MFCC coefficient independently to 0-1 range
 # This ensures all bins contribute equally to the visualisation
-bzt_scaled <- bzt_ds
+eb_scaled <- eb_ds
 for (col in bin_cols) {
-  vals <- bzt_ds[[col]]
+  vals <- eb_ds[[col]]
   rng <- range(vals, na.rm = TRUE)
   if (rng[2] > rng[1]) {
-    bzt_scaled[[col]] <- (vals - rng[1]) / (rng[2] - rng[1])
+    eb_scaled[[col]] <- (vals - rng[1]) / (rng[2] - rng[1])
   } else {
-    bzt_scaled[[col]] <- 0
+    eb_scaled[[col]] <- 0
   }
 }
 
 # Pivot to long format for ggplot
-bzt_long <- bzt_scaled |>
+eb_long <- eb_scaled |>
   pivot_longer(all_of(bin_cols), names_to = "MFCC", values_to = "Value") |>
   mutate(MFCC = factor(MFCC, levels = rev(bin_cols)))
 
-ggplot(bzt_long, aes(x = TIME, y = MFCC, fill = Value)) +
+ggplot(eb_long, aes(x = TIME, y = MFCC, fill = Value)) +
   geom_raster() +
   scale_fill_viridis_c(guide = "none") +
   theme_freq(11) +
   theme(panel.grid = element_blank()) +
-  labs(title = "Cepstrogram: Bloed, Zweet en Tranen",
-       subtitle = "Per-coefficient scaled MFCCs over time",
+  labs(title = "Cepstrogram: East Bridge Romance",
+       subtitle = "Per-coefficient scaled MFCCs over time | Hard House",
        x = "Time (s)", y = "")
 ```
 
-The cepstrogram reveals which timbral dimensions change over the course of the track. **BIN 1** (the overall spectral energy) shows clear sectional boundaries, with visible shifts corresponding to verse–chorus transitions. Higher-order coefficients (BIN 2 onward) capture finer textural details: for instance, BIN 2 often tracks the balance between low and high frequency energy, meaning that moments where this coefficient shifts sharply correspond to changes in vocal intensity or the introduction of new instruments. The cepstrogram complements the timbre SSM by showing *which* timbral dimensions change, rather than just *when* they change.
+The cepstrogram of *East Bridge Romance* reveals how timbral texture evolves across the track. BIN 1 (overall spectral energy) shows clear sectional boundaries that align with the structural transitions visible in the Week 8 chromagram: the drops appear as sudden shifts in lower-order coefficients, while the breakdowns show reduced activity across nearly all bins. Higher-order coefficients (BIN 5 onward) capture finer textural details like the presence of hi-hats, synth textures, and reverb tails. What stands out is that the timbral palette of the track changes more continuously than its harmonic content, reinforcing the observation from the SSM analysis that Hard House structure is driven by textural contrast rather than harmonic development.
