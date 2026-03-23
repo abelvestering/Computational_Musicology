@@ -76,10 +76,4 @@ ggplot(kl,aes(x=start+duration/2,width=duration,y=name,fill=d))+geom_tile()+
 
 The keygram matches the chroma content of each time window against all 24 major and minor key templates using the Krumhansl-Kessler profiles. Darker horizontal bands indicate keys that consistently match well throughout the track. For *Wood*, one or two keys dominate across the entire duration with no visible modulation; the dark bands remain stable from beginning to end. This is consistent with the block structure observed in the Week 9 SSM and shows that compositional form in this genre relies on harmonic repetition rather than harmonic development. In traditional tonal music, key changes serve as a primary structural device to create tension and resolution, but EDM takes a fundamentally different approach.
 
-## Corpus Data Explorer
 
-```{r}
-corpus |> select(Genre,`Track Name`,`Artist Name(s)`,Tempo,Energy,Danceability,Valence,Loudness,Popularity) |>
-  mutate(Tempo=round(Tempo,1),Energy=round(Energy,3),Danceability=round(Danceability,3),Valence=round(Valence,3),Loudness=round(Loudness,1)) |>
-  datatable(filter="top",options=list(pageLength=12,scrollX=T,dom='frtip'),class="table table-striped table-hover table-sm",rownames=F)
-```
