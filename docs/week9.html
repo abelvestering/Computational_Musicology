@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 9: Self-Similarity – Frequency Spectrum</title>
+<title>Week 9: Self-Similarity &amp; Timbre – Groovy House vs Hard House</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,11 +20,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -84,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Frequency Spectrum</span>
+    <span class="navbar-title">Groovy House vs Hard House</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -148,8 +182,9 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#self-similarity-matrices" id="toc-self-similarity-matrices" class="nav-link active" data-scroll-target="#self-similarity-matrices">Self-Similarity Matrices</a></li>
-  <li><a href="#harmonic-structure-wood" id="toc-harmonic-structure-wood" class="nav-link" data-scroll-target="#harmonic-structure-wood">Harmonic Structure: Wood</a></li>
+  <li><a href="#chroma-self-similarity-wood" id="toc-chroma-self-similarity-wood" class="nav-link" data-scroll-target="#chroma-self-similarity-wood">Chroma Self-Similarity: Wood</a></li>
   <li><a href="#chroma-vs-timbre-bloed-zweet-en-tranen" id="toc-chroma-vs-timbre-bloed-zweet-en-tranen" class="nav-link" data-scroll-target="#chroma-vs-timbre-bloed-zweet-en-tranen">Chroma vs Timbre: Bloed, Zweet en Tranen</a></li>
+  <li><a href="#cepstrogram-bloed-zweet-en-tranen" id="toc-cepstrogram-bloed-zweet-en-tranen" class="nav-link" data-scroll-target="#cepstrogram-bloed-zweet-en-tranen">Cepstrogram: Bloed, Zweet en Tranen</a></li>
   </ul>
 </nav>
 </nav>
@@ -162,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Week 9: Self-Similarity</h1>
+<div class="quarto-title-block"><div><h1 class="title">Week 9: Self-Similarity &amp; Timbre</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -181,34 +216,179 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="self-similarity-matrices" class="level2">
 <h2 class="anchored" data-anchor-id="self-similarity-matrices">Self-Similarity Matrices</h2>
-<p>A Self-Similarity Matrix (SSM) compares every moment in a track with every other moment, producing a visual map of structural repetition and contrast. By computing SSMs from both chroma (harmonic) and timbre (textural) features, we can examine whether a track’s form is driven by harmonic development or by changes in sound texture.</p>
+<p>A Self-Similarity Matrix (SSM) compares every moment in a track with every other moment, producing a visual map of structural repetition and contrast. By computing SSMs from both chroma (harmonic) and timbre (textural) features, we can examine whether a track’s form is driven by harmonic development or by changes in sound texture. The SSMs below were computed from Sonic Visualiser exports using Euclidean distance on downsampled chroma and MFCC frames.</p>
 </section>
-<section id="harmonic-structure-wood" class="level2">
-<h2 class="anchored" data-anchor-id="harmonic-structure-wood">Harmonic Structure: Wood</h2>
+<section id="chroma-self-similarity-wood" class="level2">
+<h2 class="anchored" data-anchor-id="chroma-self-similarity-wood">Chroma Self-Similarity: Wood</h2>
+<p>The chroma SSM for <em>Wood</em> was computed from NNLS Chroma features exported via Sonic Visualiser. The chroma vectors were downsampled (every 50th frame) and the Euclidean distance between all pairs was calculated and plotted as a heatmap.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Chroma SSM: Wood (Euclidean distance)</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read NNLS Chroma export from Sonic Visualiser</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>wood <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"wood.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>chroma_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(wood, <span class="sc">-</span>TIME))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample: take every 50th frame</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(chroma_mat), <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>chroma_small <span class="ot">&lt;-</span> chroma_mat[idx, ]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>time_w <span class="ot">&lt;-</span> wood<span class="sc">$</span>TIME[idx]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise Euclidean distance</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>dist_w <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(chroma_small, <span class="at">method =</span> <span class="st">"euclidean"</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for ggplot</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ssm_w <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_w), <span class="at">Y =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_w))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ssm_w<span class="sc">$</span>Distance <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dist_w)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ssm_w<span class="sc">$</span>TimeX <span class="ot">&lt;-</span> time_w[ssm_w<span class="sc">$</span>X]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ssm_w<span class="sc">$</span>TimeY <span class="ot">&lt;-</span> time_w[ssm_w<span class="sc">$</span>Y]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ssm_w, <span class="fu">aes</span>(<span class="at">x =</span> TimeX, <span class="at">y =</span> TimeY, <span class="at">fill =</span> Distance)) <span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">"magma"</span>) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chroma Self-Similarity Matrix: Wood"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Calculated using Euclidean distance"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (seconds)"</span>, <span class="at">y =</span> <span class="st">"Time (seconds)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 <div style="text-align:center;">
 <p><img src="Rplot01.png" style="max-width:600px;width:100%;height:auto;"></p>
 </div>
-<p>The chroma-based self-similarity matrix of <em>Wood</em> displays a clear block-diagonal structure, with well-defined rectangular regions along the main diagonal. Each block represents a section of the track where harmonic content remains internally consistent, and the sharp transitions between blocks indicate structural boundaries. This confirms that <em>Wood</em> is composed of <strong>discrete, recurring harmonic zones</strong> rather than continuous development — typical of loop-based electronic music where form emerges through the layering and removal of elements over a repeating harmonic foundation.</p>
+<p>The chroma-based self-similarity matrix of <em>Wood</em> displays a clear block-diagonal structure, with well-defined rectangular regions along the main diagonal. Each block represents a section of the track where harmonic content remains internally consistent, and the sharp transitions between blocks indicate structural boundaries. <em>Wood</em> is composed of discrete, recurring harmonic zones rather than continuous development, which is typical of loop-based electronic music where form emerges through the layering and removal of elements over a repeating harmonic foundation.</p>
 </section>
 <section id="chroma-vs-timbre-bloed-zweet-en-tranen" class="level2">
 <h2 class="anchored" data-anchor-id="chroma-vs-timbre-bloed-zweet-en-tranen">Chroma vs Timbre: Bloed, Zweet en Tranen</h2>
+<p>The same SSM method is applied to <em>Bloed, Zweet en Tranen</em> using both chroma (pitch class) and timbre (MFCC) features. Both SSMs use Euclidean distance on every 50th frame. Comparing the two reveals whether harmonic and timbral structure align or diverge within the same track.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Chroma</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Timbre</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Chroma SSM: Bloed, Zweet en Tranen</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read NNLS Chroma export from Sonic Visualiser</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>bzt_pitches <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-pitches.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>chroma_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(bzt_pitches, <span class="sc">-</span>TIME))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample: take every 50th frame</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>idx_c <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(chroma_mat), <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>chroma_small <span class="ot">&lt;-</span> chroma_mat[idx_c, ]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>time_c <span class="ot">&lt;-</span> bzt_pitches<span class="sc">$</span>TIME[idx_c]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise Euclidean distance</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>dist_c <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(chroma_small, <span class="at">method =</span> <span class="st">"euclidean"</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for ggplot</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ssm_c <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_c), <span class="at">Y =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_c))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ssm_c<span class="sc">$</span>Distance <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dist_c)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>ssm_c<span class="sc">$</span>TimeX <span class="ot">&lt;-</span> time_c[ssm_c<span class="sc">$</span>X]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>ssm_c<span class="sc">$</span>TimeY <span class="ot">&lt;-</span> time_c[ssm_c<span class="sc">$</span>Y]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ssm_c, <span class="fu">aes</span>(<span class="at">x =</span> TimeX, <span class="at">y =</span> TimeY, <span class="at">fill =</span> Distance)) <span class="sc">+</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">"magma"</span>) <span class="sc">+</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chroma SSM: Bloed, Zweet en Tranen"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Time (s)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 <div style="text-align:center;">
 <img src="Rplot02.png" style="max-width:600px;width:100%;height:auto;">
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Timbre SSM: Bloed, Zweet en Tranen (MFCCs)</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read MFCC export from Sonic Visualiser (libextract MFCCs)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bzt_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-timbre.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>timbre_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(bzt_timbre, <span class="sc">-</span>TIME))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample: take every 50th frame</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>idx_t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(timbre_mat), <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>timbre_small <span class="ot">&lt;-</span> timbre_mat[idx_t, ]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>time_t <span class="ot">&lt;-</span> bzt_timbre<span class="sc">$</span>TIME[idx_t]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise Euclidean distance</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>dist_t <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(timbre_small, <span class="at">method =</span> <span class="st">"euclidean"</span>))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for ggplot</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ssm_t <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_t), <span class="at">Y =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_t))</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>ssm_t<span class="sc">$</span>Distance <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dist_t)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>ssm_t<span class="sc">$</span>TimeX <span class="ot">&lt;-</span> time_t[ssm_t<span class="sc">$</span>X]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ssm_t<span class="sc">$</span>TimeY <span class="ot">&lt;-</span> time_t[ssm_t<span class="sc">$</span>Y]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ssm_t, <span class="fu">aes</span>(<span class="at">x =</span> TimeX, <span class="at">y =</span> TimeY, <span class="at">fill =</span> Distance)) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">"mako"</span>) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Timbre SSM: Bloed, Zweet en Tranen"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Time (s)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 <div style="text-align:center;">
 <img src="Rplot03.png" style="max-width:600px;width:100%;height:auto;">
 </div>
 </div>
 </div>
 </div>
-<p>Comparing the two SSMs reveals that harmonic and timbral structure can diverge significantly within the same track. The <strong>chroma SSM</strong> shows clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The <strong>timbre SSM</strong>, by contrast, is noisier and more irregular — even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. This demonstrates that a track can be <strong>harmonically stable</strong> while remaining <strong>texturally dynamic</strong>, and that chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.</p>
+<p>Comparing the two SSMs shows that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM has clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular. Even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. A track can be harmonically stable while remaining texturally dynamic, and chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.</p>
+</section>
+<section id="cepstrogram-bloed-zweet-en-tranen" class="level2">
+<h2 class="anchored" data-anchor-id="cepstrogram-bloed-zweet-en-tranen">Cepstrogram: Bloed, Zweet en Tranen</h2>
+<p>A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Cepstrogram: Bloed, Zweet en Tranen (MFCCs, per-coefficient scaled)</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read MFCC data exported from Sonic Visualiser (libextract MFCCs)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bzt_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-timbre.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>bin_cols <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"BIN"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample for readability (every 5th frame)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>bzt_ds <span class="ot">&lt;-</span> bzt_timbre[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(bzt_timbre), <span class="at">by =</span> <span class="dv">5</span>), ]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale each MFCC coefficient independently to 0–1 range</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># This ensures all bins contribute equally to the visualisation</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>bzt_scaled <span class="ot">&lt;-</span> bzt_ds</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> bin_cols) {</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> bzt_ds[[col]]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(vals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (rng[<span class="dv">2</span>] <span class="sc">&gt;</span> rng[<span class="dv">1</span>]) {</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> (vals <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot to long format for ggplot</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>bzt_long <span class="ot">&lt;-</span> bzt_scaled <span class="sc">|&gt;</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">all_of</span>(bin_cols), <span class="at">names_to =</span> <span class="st">"MFCC"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MFCC =</span> <span class="fu">factor</span>(MFCC, <span class="at">levels =</span> <span class="fu">rev</span>(bin_cols)))</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bzt_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> MFCC, <span class="at">fill =</span> Value)) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cepstrogram: Bloed, Zweet en Tranen"</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Per-coefficient scaled MFCCs over time"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week9_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The cepstrogram reveals which timbral dimensions change over the course of the track. <strong>BIN 1</strong> (the overall spectral energy) shows clear sectional boundaries, with visible shifts corresponding to verse–chorus transitions. Higher-order coefficients (BIN 2 onward) capture finer textural details: for instance, BIN 2 often tracks the balance between low and high frequency energy, meaning that moments where this coefficient shifts sharply correspond to changes in vocal intensity or the introduction of new instruments. The cepstrogram complements the timbre SSM by showing <em>which</em> timbral dimensions change, rather than just <em>when</em> they change.</p>
 
+
+<!-- -->
 
 </section>
 
@@ -283,6 +463,57 @@ ul.task-list li input[type="checkbox"] {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -612,7 +843,190 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
-  </script>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Week 9: Self-Similarity &amp; Timbre"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Self-Similarity Matrices</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>A Self-Similarity Matrix (SSM) compares every moment in a track with every other moment, producing a visual map of structural repetition and contrast. By computing SSMs from both chroma (harmonic) and timbre (textural) features, we can examine whether a track's form is driven by harmonic development or by changes in sound texture. The SSMs below were computed from Sonic Visualiser exports using Euclidean distance on downsampled chroma and MFCC frames.</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chroma Self-Similarity: Wood</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>The chroma SSM for *Wood* was computed from NNLS Chroma features exported via Sonic Visualiser. The chroma vectors were downsampled (every 50th frame) and the Euclidean distance between all pairs was calculated and plotted as a heatmap.</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Chroma SSM: Wood (Euclidean distance)"</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Read NNLS Chroma export from Sonic Visualiser</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>wood <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"wood.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>chroma_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(wood, <span class="sc">-</span>TIME))</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample: take every 50th frame</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(chroma_mat), <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>chroma_small <span class="ot">&lt;-</span> chroma_mat[idx, ]</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>time_w <span class="ot">&lt;-</span> wood<span class="sc">$</span>TIME[idx]</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise Euclidean distance</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>dist_w <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(chroma_small, <span class="at">method =</span> <span class="st">"euclidean"</span>))</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for ggplot</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>ssm_w <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_w), <span class="at">Y =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_w))</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>ssm_w<span class="sc">$</span>Distance <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dist_w)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>ssm_w<span class="sc">$</span>TimeX <span class="ot">&lt;-</span> time_w[ssm_w<span class="sc">$</span>X]</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>ssm_w<span class="sc">$</span>TimeY <span class="ot">&lt;-</span> time_w[ssm_w<span class="sc">$</span>Y]</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ssm_w, <span class="fu">aes</span>(<span class="at">x =</span> TimeX, <span class="at">y =</span> TimeY, <span class="at">fill =</span> Distance)) <span class="sc">+</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">"magma"</span>) <span class="sc">+</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chroma Self-Similarity Matrix: Wood"</span>,</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Calculated using Euclidean distance"</span>,</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (seconds)"</span>, <span class="at">y =</span> <span class="st">"Time (seconds)"</span>)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">"text-align:center;"</span><span class="dt">&gt;</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"Rplot01.png"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"max-width:600px;width:100%;height:auto;"</span><span class="dt">&gt;</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>The chroma-based self-similarity matrix of *Wood* displays a clear block-diagonal structure, with well-defined rectangular regions along the main diagonal. Each block represents a section of the track where harmonic content remains internally consistent, and the sharp transitions between blocks indicate structural boundaries. *Wood* is composed of discrete, recurring harmonic zones rather than continuous development, which is typical of loop-based electronic music where form emerges through the layering and removal of elements over a repeating harmonic foundation.</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chroma vs Timbre: Bloed, Zweet en Tranen</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>The same SSM method is applied to *Bloed, Zweet en Tranen* using both chroma (pitch class) and timbre (MFCC) features. Both SSMs use Euclidean distance on every 50th frame. Comparing the two reveals whether harmonic and timbral structure align or diverge within the same track.</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chroma</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Chroma SSM: Bloed, Zweet en Tranen"</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Read NNLS Chroma export from Sonic Visualiser</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>bzt_pitches <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-pitches.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>chroma_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(bzt_pitches, <span class="sc">-</span>TIME))</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample: take every 50th frame</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>idx_c <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(chroma_mat), <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>chroma_small <span class="ot">&lt;-</span> chroma_mat[idx_c, ]</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>time_c <span class="ot">&lt;-</span> bzt_pitches<span class="sc">$</span>TIME[idx_c]</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise Euclidean distance</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>dist_c <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(chroma_small, <span class="at">method =</span> <span class="st">"euclidean"</span>))</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for ggplot</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>ssm_c <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_c), <span class="at">Y =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_c))</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>ssm_c<span class="sc">$</span>Distance <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dist_c)</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>ssm_c<span class="sc">$</span>TimeX <span class="ot">&lt;-</span> time_c[ssm_c<span class="sc">$</span>X]</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>ssm_c<span class="sc">$</span>TimeY <span class="ot">&lt;-</span> time_c[ssm_c<span class="sc">$</span>Y]</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ssm_c, <span class="fu">aes</span>(<span class="at">x =</span> TimeX, <span class="at">y =</span> TimeY, <span class="at">fill =</span> Distance)) <span class="sc">+</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">"magma"</span>) <span class="sc">+</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chroma SSM: Bloed, Zweet en Tranen"</span>,</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Time (s)"</span>)</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">"text-align:center;"</span><span class="dt">&gt;&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"Rplot02.png"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"max-width:600px;width:100%;height:auto;"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### Timbre</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Timbre SSM: Bloed, Zweet en Tranen (MFCCs)"</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Read MFCC export from Sonic Visualiser (libextract MFCCs)</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>bzt_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-timbre.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>timbre_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(bzt_timbre, <span class="sc">-</span>TIME))</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample: take every 50th frame</span></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>idx_t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(timbre_mat), <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>timbre_small <span class="ot">&lt;-</span> timbre_mat[idx_t, ]</span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>time_t <span class="ot">&lt;-</span> bzt_timbre<span class="sc">$</span>TIME[idx_t]</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise Euclidean distance</span></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>dist_t <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(timbre_small, <span class="at">method =</span> <span class="st">"euclidean"</span>))</span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for ggplot</span></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>ssm_t <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_t), <span class="at">Y =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dist_t))</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>ssm_t<span class="sc">$</span>Distance <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dist_t)</span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>ssm_t<span class="sc">$</span>TimeX <span class="ot">&lt;-</span> time_t[ssm_t<span class="sc">$</span>X]</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a>ssm_t<span class="sc">$</span>TimeY <span class="ot">&lt;-</span> time_t[ssm_t<span class="sc">$</span>Y]</span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ssm_t, <span class="fu">aes</span>(<span class="at">x =</span> TimeX, <span class="at">y =</span> TimeY, <span class="at">fill =</span> Distance)) <span class="sc">+</span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">"mako"</span>) <span class="sc">+</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Timbre SSM: Bloed, Zweet en Tranen"</span>,</span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Time (s)"</span>)</span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">"text-align:center;"</span><span class="dt">&gt;&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"Rplot03.png"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"max-width:600px;width:100%;height:auto;"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>Comparing the two SSMs shows that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM has clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular. Even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. A track can be harmonically stable while remaining texturally dynamic, and chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.</span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cepstrogram: Bloed, Zweet en Tranen</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible.</span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Cepstrogram: Bloed, Zweet en Tranen (MFCCs, per-coefficient scaled)"</span></span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a><span class="co"># Read MFCC data exported from Sonic Visualiser (libextract MFCCs)</span></span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>bzt_timbre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"bzt-timbre.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>bin_cols <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"BIN"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>)</span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample for readability (every 5th frame)</span></span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>bzt_ds <span class="ot">&lt;-</span> bzt_timbre[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(bzt_timbre), <span class="at">by =</span> <span class="dv">5</span>), ]</span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale each MFCC coefficient independently to 0–1 range</span></span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="co"># This ensures all bins contribute equally to the visualisation</span></span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>bzt_scaled <span class="ot">&lt;-</span> bzt_ds</span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> bin_cols) {</span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> bzt_ds[[col]]</span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(vals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (rng[<span class="dv">2</span>] <span class="sc">&gt;</span> rng[<span class="dv">1</span>]) {</span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> (vals <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>    bzt_scaled[[col]] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot to long format for ggplot</span></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>bzt_long <span class="ot">&lt;-</span> bzt_scaled <span class="sc">|&gt;</span></span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">all_of</span>(bin_cols), <span class="at">names_to =</span> <span class="st">"MFCC"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MFCC =</span> <span class="fu">factor</span>(MFCC, <span class="at">levels =</span> <span class="fu">rev</span>(bin_cols)))</span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bzt_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> MFCC, <span class="at">fill =</span> Value)) <span class="sc">+</span></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cepstrogram: Bloed, Zweet en Tranen"</span>,</span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Per-coefficient scaled MFCCs over time"</span>,</span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a>The cepstrogram reveals which timbral dimensions change over the course of the track. **BIN 1** (the overall spectral energy) shows clear sectional boundaries, with visible shifts corresponding to verse–chorus transitions. Higher-order coefficients (BIN 2 onward) capture finer textural details: for instance, BIN 2 often tracks the balance between low and high frequency energy, meaning that moments where this coefficient shifts sharply correspond to changes in vocal intensity or the introduction of new instruments. The cepstrogram complements the timbre SSM by showing *which* timbral dimensions change, rather than just *when* they change.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

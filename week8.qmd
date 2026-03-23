@@ -13,36 +13,100 @@ This section examines whether the perceived "vibe" of each genre translates into
 
 ## Energy vs Tempo: Full Corpus
 
+A scatter plot maps each track by its Spotify tempo (x-axis) and energy (y-axis) values, coloured by genre. This visualisation reveals whether the two genres occupy distinct regions of the feature space.
+
 ```{r}
+#| code-summary: "Scatter plot: Energy vs Tempo"
 #| fig-width: 10
 #| fig-height: 5
 #| out-width: "100%"
-ggplot(corpus, aes(x=Tempo,y=Energy,colour=Genre)) + geom_point(alpha=0.5,size=1.8) +
-  scale_colour_manual(values=pal) + theme_freq(13) +
-  labs(title="Minimal Tech House vs Hard House", subtitle="Energy vs Tempo across 861 tracks",
-    x="Tempo (BPM)", y="Energy", colour=NULL)
+
+# Plot each track as a point in Energy-Tempo space, coloured by genre
+# This reveals whether the two genres cluster in different regions
+ggplot(corpus, aes(x = Tempo, y = Energy, colour = Genre)) +
+  geom_point(alpha = 0.5, size = 1.8) +
+  scale_colour_manual(values = pal) +
+  theme_freq(13) +
+  labs(
+    title = "Minimal Tech House vs Hard House",
+    subtitle = "Energy vs Tempo across 861 tracks",
+    x = "Tempo (BPM)", y = "Energy", colour = NULL
+  )
 ```
 
-The scatter plot reveals a clear spatial separation between the two genres. **Hard House** occupies the top-right quadrant, clustering around 138–150 BPM with energy values consistently above 0.8. **Minimal Tech House** sits in the bottom-left, concentrated between 120–128 BPM with more moderate energy levels. This separation confirms that the perceived stylistic contrast is reflected in Spotify's numerical feature space. The overlap region between the two clusters is small but not empty, suggesting that some tracks sit on the genre boundary — which is expected, since genres are cultural constructs with fluid edges rather than rigid categories.
+The scatter plot shows a clear spatial separation between the two genres. Hard House occupies the top-right quadrant, clustering around 138–150 BPM with energy values consistently above 0.8. Minimal Tech House sits in the bottom-left, concentrated between 120–128 BPM with more moderate energy levels. The perceived stylistic contrast is clearly reflected in Spotify's numerical feature space. The overlap region between the two clusters is small but not empty, which is expected since genres are cultural constructs with fluid edges rather than rigid categories.
 
 ## Energy, Tempo & Loudness Distributions
 
+Density plots compare the distribution of three key features across both genres, arranged side by side using `gridExtra::grid.arrange`. Density estimation smooths the raw data into continuous curves, making it easier to compare distributional shapes.
+
 ```{r}
+#| code-summary: "Density plots: Tempo, Energy, Loudness"
 #| fig-width: 14
 #| fig-height: 5
 #| out-width: "100%"
-p1<-ggplot(corpus,aes(x=Tempo,fill=Genre))+geom_density(alpha=0.6)+scale_fill_manual(values=pal)+theme_freq(11)+labs(title="Tempo",x="BPM",y="Density",fill=NULL)
-p2<-ggplot(corpus,aes(x=Energy,fill=Genre))+geom_density(alpha=0.6)+scale_fill_manual(values=pal)+theme_freq(11)+labs(title="Energy",x="Energy (0-1)",y="Density",fill=NULL)
-p3<-ggplot(corpus,aes(x=Loudness,fill=Genre))+geom_density(alpha=0.6)+scale_fill_manual(values=pal)+theme_freq(11)+labs(title="Loudness",x="Loudness (dB)",y="Density",fill=NULL)
-gridExtra::grid.arrange(p1,p2,p3,ncol=3)
+
+# Create three density plots comparing key features across genres
+# Density estimation smooths raw values into continuous probability curves
+p1 <- ggplot(corpus, aes(x = Tempo, fill = Genre)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_manual(values = pal) +
+  theme_freq(11) +
+  labs(title = "Tempo", x = "BPM", y = "Density", fill = NULL)
+
+p2 <- ggplot(corpus, aes(x = Energy, fill = Genre)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_manual(values = pal) +
+  theme_freq(11) +
+  labs(title = "Energy", x = "Energy (0-1)", y = "Density", fill = NULL)
+
+p3 <- ggplot(corpus, aes(x = Loudness, fill = Genre)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_manual(values = pal) +
+  theme_freq(11) +
+  labs(title = "Loudness", x = "Loudness (dB)", y = "Density", fill = NULL)
+
+# Arrange all three side by side for direct comparison
+gridExtra::grid.arrange(p1, p2, p3, ncol = 3)
 ```
 
-All three density plots show distinct peaks per genre. **Tempo** provides the cleanest separation: the two distributions have almost no overlap between 128 and 138 BPM, creating a natural decision boundary. **Energy** separates well too, though Minimal Tech House shows a wider spread — some tracks push toward higher energy while remaining structurally minimal. **Loudness** reveals a fundamental difference in mastering philosophy: Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice.
+All three density plots show distinct peaks per genre. Tempo provides the cleanest separation, with almost no overlap between 128 and 138 BPM, creating a natural decision boundary. Energy separates well too, though Minimal Tech House shows a wider spread: some tracks push toward higher energy while remaining structurally minimal. Loudness reveals a fundamental difference in mastering philosophy. Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice.
 
 ## Chroma Features: East Bridge Romance
 
-<div style="text-align:center;">
-  <img src="Image.png" style="max-width:700px;width:100%;height:auto;">
-</div>
+The chromagram is generated from NNLS Chroma features exported via Sonic Visualiser. Each row represents a pitch class (C through B), and each column a time frame. Intensity is mapped to colour using the viridis palette, producing a heatmap of harmonic activity over time.
 
-The chromagram of *East Bridge Romance* shows repeated horizontal bands concentrated around a small number of pitch classes, revealing a loop-based harmonic structure typical of Hard House. Brighter areas align with the track's drops, where multiple pitch classes activate simultaneously as layered synths and bass enter. Thinner, darker sections correspond to breakdowns where the arrangement strips back to percussion and atmosphere. This pattern demonstrates that formal structure in Hard House emerges not from harmonic development or modulation, but from **textural contrast** — the alternation between sparse and dense moments around a stable harmonic core.
+```{r}
+#| code-summary: "Chromagram: East Bridge Romance (NNLS Chroma)"
+#| fig-width: 12
+#| fig-height: 5
+#| out-width: "100%"
+
+# east_bridge_chroma.csv has no header: 24 columns (bass + treble chroma from NNLS)
+# We sum both sets of 12 into a single chroma profile per frame
+pitch_names <- c("C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B")
+ebr_raw <- read_csv("east_bridge_chroma.csv", col_names = FALSE, show_col_types = F)
+
+# Bass chroma = columns 1-12, treble chroma = columns 13-24
+bass <- ebr_raw[, 1:12]
+treble <- ebr_raw[, 13:24]
+colnames(bass) <- pitch_names
+colnames(treble) <- pitch_names
+ebr_chroma <- bass + treble
+ebr_chroma$TIME <- seq(0, by = 0.023, length.out = nrow(ebr_chroma))
+
+ebr_long <- ebr_chroma |>
+  pivot_longer(all_of(pitch_names), names_to = "Pitch_Class", values_to = "Intensity") |>
+  mutate(Pitch_Class = factor(Pitch_Class, levels = rev(pitch_names)))
+
+ggplot(ebr_long, aes(x = TIME, y = Pitch_Class, fill = Intensity)) +
+  geom_raster() +
+  scale_fill_viridis_c(option = "inferno", guide = "none") +
+  theme_freq(11) +
+  theme(panel.grid = element_blank()) +
+  labs(title = "Chromagram: East Bridge Romance",
+       subtitle = "NNLS Chroma features (bass + treble) | Hard House",
+       x = "Time (s)", y = "")
+```
+
+The chromagram of *East Bridge Romance* shows repeated horizontal bands concentrated around a small number of pitch classes, revealing a loop-based harmonic structure typical of Hard House. Brighter areas align with the track's drops, where multiple pitch classes activate simultaneously as layered synths and bass enter. Thinner, darker sections correspond to breakdowns where the arrangement strips back to percussion and atmosphere. What stands out is that formal structure in Hard House emerges not from harmonic development or modulation, but from textural contrast: the alternation between sparse and dense moments around a stable harmonic core.

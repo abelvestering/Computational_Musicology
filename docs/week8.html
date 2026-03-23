@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 8: Track-Level Features – Frequency Spectrum</title>
+<title>Week 8: Track-Level Features – Groovy House vs Hard House</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,11 +20,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -84,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Frequency Spectrum</span>
+    <span class="navbar-title">Groovy House vs Hard House</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -163,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Week 8: Track-Level Features</h1>
+<div class="quarto-title-block"><div><h1 class="title">Week 8: Track-Level Features</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -186,7 +220,22 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="energy-vs-tempo-full-corpus" class="level2">
 <h2 class="anchored" data-anchor-id="energy-vs-tempo-full-corpus">Energy vs Tempo: Full Corpus</h2>
+<p>A scatter plot maps each track by its Spotify tempo (x-axis) and energy (y-axis) values, coloured by genre. This visualisation reveals whether the two genres occupy distinct regions of the feature space.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Scatter plot: Energy vs Tempo</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot each track as a point in Energy-Tempo space, coloured by genre</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This reveals whether the two genres cluster in different regions</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Tempo, <span class="at">y =</span> Energy, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Minimal Tech House vs Hard House"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Energy vs Tempo across 861 tracks"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Tempo (BPM)"</span>, <span class="at">y =</span> <span class="st">"Energy"</span>, <span class="at">colour =</span> <span class="cn">NULL</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -195,11 +244,37 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>The scatter plot reveals a clear spatial separation between the two genres. <strong>Hard House</strong> occupies the top-right quadrant, clustering around 138–150 BPM with energy values consistently above 0.8. <strong>Minimal Tech House</strong> sits in the bottom-left, concentrated between 120–128 BPM with more moderate energy levels. This separation confirms that the perceived stylistic contrast is reflected in Spotify’s numerical feature space. The overlap region between the two clusters is small but not empty, suggesting that some tracks sit on the genre boundary — which is expected, since genres are cultural constructs with fluid edges rather than rigid categories.</p>
+<p>The scatter plot shows a clear spatial separation between the two genres. Hard House occupies the top-right quadrant, clustering around 138–150 BPM with energy values consistently above 0.8. Minimal Tech House sits in the bottom-left, concentrated between 120–128 BPM with more moderate energy levels. The perceived stylistic contrast is clearly reflected in Spotify’s numerical feature space. The overlap region between the two clusters is small but not empty, which is expected since genres are cultural constructs with fluid edges rather than rigid categories.</p>
 </section>
 <section id="energy-tempo-loudness-distributions" class="level2">
 <h2 class="anchored" data-anchor-id="energy-tempo-loudness-distributions">Energy, Tempo &amp; Loudness Distributions</h2>
+<p>Density plots compare the distribution of three key features across both genres, arranged side by side using <code>gridExtra::grid.arrange</code>. Density estimation smooths the raw data into continuous curves, making it easier to compare distributional shapes.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Density plots: Tempo, Energy, Loudness</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create three density plots comparing key features across genres</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Density estimation smooths raw values into continuous probability curves</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Tempo, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Tempo"</span>, <span class="at">x =</span> <span class="st">"BPM"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Energy, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Energy"</span>, <span class="at">x =</span> <span class="st">"Energy (0-1)"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Loudness, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Loudness"</span>, <span class="at">x =</span> <span class="st">"Loudness (dB)"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange all three side by side for direct comparison</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1, p2, p3, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -208,15 +283,52 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>All three density plots show distinct peaks per genre. <strong>Tempo</strong> provides the cleanest separation: the two distributions have almost no overlap between 128 and 138 BPM, creating a natural decision boundary. <strong>Energy</strong> separates well too, though Minimal Tech House shows a wider spread — some tracks push toward higher energy while remaining structurally minimal. <strong>Loudness</strong> reveals a fundamental difference in mastering philosophy: Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice.</p>
+<p>All three density plots show distinct peaks per genre. Tempo provides the cleanest separation, with almost no overlap between 128 and 138 BPM, creating a natural decision boundary. Energy separates well too, though Minimal Tech House shows a wider spread: some tracks push toward higher energy while remaining structurally minimal. Loudness reveals a fundamental difference in mastering philosophy. Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice.</p>
 </section>
 <section id="chroma-features-east-bridge-romance" class="level2">
 <h2 class="anchored" data-anchor-id="chroma-features-east-bridge-romance">Chroma Features: East Bridge Romance</h2>
-<div style="text-align:center;">
-<p><img src="Image.png" style="max-width:700px;width:100%;height:auto;"></p>
+<p>The chromagram is generated from NNLS Chroma features exported via Sonic Visualiser. Each row represents a pitch class (C through B), and each column a time frame. Intensity is mapped to colour using the viridis palette, producing a heatmap of harmonic activity over time.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Chromagram: East Bridge Romance (NNLS Chroma)</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># east_bridge_chroma.csv has no header: 24 columns (bass + treble chroma from NNLS)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We sum both sets of 12 into a single chroma profile per frame</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pitch_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"C"</span>,<span class="st">"C#"</span>,<span class="st">"D"</span>,<span class="st">"Eb"</span>,<span class="st">"E"</span>,<span class="st">"F"</span>,<span class="st">"F#"</span>,<span class="st">"G"</span>,<span class="st">"Ab"</span>,<span class="st">"A"</span>,<span class="st">"Bb"</span>,<span class="st">"B"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ebr_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"east_bridge_chroma.csv"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Bass chroma = columns 1-12, treble chroma = columns 13-24</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>bass <span class="ot">&lt;-</span> ebr_raw[, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>treble <span class="ot">&lt;-</span> ebr_raw[, <span class="dv">13</span><span class="sc">:</span><span class="dv">24</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(bass) <span class="ot">&lt;-</span> pitch_names</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(treble) <span class="ot">&lt;-</span> pitch_names</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>ebr_chroma <span class="ot">&lt;-</span> bass <span class="sc">+</span> treble</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>ebr_chroma<span class="sc">$</span>TIME <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="at">by =</span> <span class="fl">0.023</span>, <span class="at">length.out =</span> <span class="fu">nrow</span>(ebr_chroma))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ebr_long <span class="ot">&lt;-</span> ebr_chroma <span class="sc">|&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">all_of</span>(pitch_names), <span class="at">names_to =</span> <span class="st">"Pitch_Class"</span>, <span class="at">values_to =</span> <span class="st">"Intensity"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pitch_Class =</span> <span class="fu">factor</span>(Pitch_Class, <span class="at">levels =</span> <span class="fu">rev</span>(pitch_names)))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ebr_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> Pitch_Class, <span class="at">fill =</span> Intensity)) <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"inferno"</span>, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chromagram: East Bridge Romance"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"NNLS Chroma features (bass + treble) | Hard House"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week8_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
 </div>
-<p>The chromagram of <em>East Bridge Romance</em> shows repeated horizontal bands concentrated around a small number of pitch classes, revealing a loop-based harmonic structure typical of Hard House. Brighter areas align with the track’s drops, where multiple pitch classes activate simultaneously as layered synths and bass enter. Thinner, darker sections correspond to breakdowns where the arrangement strips back to percussion and atmosphere. This pattern demonstrates that formal structure in Hard House emerges not from harmonic development or modulation, but from <strong>textural contrast</strong> — the alternation between sparse and dense moments around a stable harmonic core.</p>
+</div>
+</div>
+<p>The chromagram of <em>East Bridge Romance</em> shows repeated horizontal bands concentrated around a small number of pitch classes, revealing a loop-based harmonic structure typical of Hard House. Brighter areas align with the track’s drops, where multiple pitch classes activate simultaneously as layered synths and bass enter. Thinner, darker sections correspond to breakdowns where the arrangement strips back to percussion and atmosphere. What stands out is that formal structure in Hard House emerges not from harmonic development or modulation, but from textural contrast: the alternation between sparse and dense moments around a stable harmonic core.</p>
 
+
+<!-- -->
 
 </section>
 
@@ -291,6 +403,57 @@ ul.task-list li input[type="checkbox"] {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -620,7 +783,121 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
-  </script>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Week 8: Track-Level Features"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Track-Level Feature Analysis</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>This section examines whether the perceived "vibe" of each genre translates into measurable numerical differences. By comparing energy, tempo, loudness, and chroma features across the full corpus, we test whether Spotify's audio features can capture the contrast between groove-oriented restraint and high-energy aggression.</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Energy vs Tempo: Full Corpus</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>A scatter plot maps each track by its Spotify tempo (x-axis) and energy (y-axis) values, coloured by genre. This visualisation reveals whether the two genres occupy distinct regions of the feature space.</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Scatter plot: Energy vs Tempo"</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot each track as a point in Energy-Tempo space, coloured by genre</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># This reveals whether the two genres cluster in different regions</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Tempo, <span class="at">y =</span> Energy, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Minimal Tech House vs Hard House"</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Energy vs Tempo across 861 tracks"</span>,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Tempo (BPM)"</span>, <span class="at">y =</span> <span class="st">"Energy"</span>, <span class="at">colour =</span> <span class="cn">NULL</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>The scatter plot shows a clear spatial separation between the two genres. Hard House occupies the top-right quadrant, clustering around 138–150 BPM with energy values consistently above 0.8. Minimal Tech House sits in the bottom-left, concentrated between 120–128 BPM with more moderate energy levels. The perceived stylistic contrast is clearly reflected in Spotify's numerical feature space. The overlap region between the two clusters is small but not empty, which is expected since genres are cultural constructs with fluid edges rather than rigid categories.</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Energy, Tempo &amp; Loudness Distributions</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>Density plots compare the distribution of three key features across both genres, arranged side by side using <span class="in">`gridExtra::grid.arrange`</span>. Density estimation smooths the raw data into continuous curves, making it easier to compare distributional shapes.</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Density plots: Tempo, Energy, Loudness"</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Create three density plots comparing key features across genres</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Density estimation smooths raw values into continuous probability curves</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Tempo, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Tempo"</span>, <span class="at">x =</span> <span class="st">"BPM"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Energy, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Energy"</span>, <span class="at">x =</span> <span class="st">"Energy (0-1)"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>)</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Loudness, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Loudness"</span>, <span class="at">x =</span> <span class="st">"Loudness (dB)"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange all three side by side for direct comparison</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1, p2, p3, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>All three density plots show distinct peaks per genre. Tempo provides the cleanest separation, with almost no overlap between 128 and 138 BPM, creating a natural decision boundary. Energy separates well too, though Minimal Tech House shows a wider spread: some tracks push toward higher energy while remaining structurally minimal. Loudness reveals a fundamental difference in mastering philosophy. Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice.</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chroma Features: East Bridge Romance</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>The chromagram is generated from NNLS Chroma features exported via Sonic Visualiser. Each row represents a pitch class (C through B), and each column a time frame. Intensity is mapped to colour using the viridis palette, producing a heatmap of harmonic activity over time.</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Chromagram: East Bridge Romance (NNLS Chroma)"</span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="co"># east_bridge_chroma.csv has no header: 24 columns (bass + treble chroma from NNLS)</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="co"># We sum both sets of 12 into a single chroma profile per frame</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>pitch_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"C"</span>,<span class="st">"C#"</span>,<span class="st">"D"</span>,<span class="st">"Eb"</span>,<span class="st">"E"</span>,<span class="st">"F"</span>,<span class="st">"F#"</span>,<span class="st">"G"</span>,<span class="st">"Ab"</span>,<span class="st">"A"</span>,<span class="st">"Bb"</span>,<span class="st">"B"</span>)</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>ebr_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"east_bridge_chroma.csv"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Bass chroma = columns 1-12, treble chroma = columns 13-24</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>bass <span class="ot">&lt;-</span> ebr_raw[, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]</span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>treble <span class="ot">&lt;-</span> ebr_raw[, <span class="dv">13</span><span class="sc">:</span><span class="dv">24</span>]</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(bass) <span class="ot">&lt;-</span> pitch_names</span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(treble) <span class="ot">&lt;-</span> pitch_names</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>ebr_chroma <span class="ot">&lt;-</span> bass <span class="sc">+</span> treble</span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>ebr_chroma<span class="sc">$</span>TIME <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="at">by =</span> <span class="fl">0.023</span>, <span class="at">length.out =</span> <span class="fu">nrow</span>(ebr_chroma))</span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>ebr_long <span class="ot">&lt;-</span> ebr_chroma <span class="sc">|&gt;</span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">all_of</span>(pitch_names), <span class="at">names_to =</span> <span class="st">"Pitch_Class"</span>, <span class="at">values_to =</span> <span class="st">"Intensity"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pitch_Class =</span> <span class="fu">factor</span>(Pitch_Class, <span class="at">levels =</span> <span class="fu">rev</span>(pitch_names)))</span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ebr_long, <span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> Pitch_Class, <span class="at">fill =</span> Intensity)) <span class="sc">+</span></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"inferno"</span>, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chromagram: East Bridge Romance"</span>,</span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"NNLS Chroma features (bass + treble) | Hard House"</span>,</span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>The chromagram of *East Bridge Romance* shows repeated horizontal bands concentrated around a small number of pitch classes, revealing a loop-based harmonic structure typical of Hard House. Brighter areas align with the track's drops, where multiple pitch classes activate simultaneously as layered synths and bass enter. Thinner, darker sections correspond to breakdowns where the arrangement strips back to percussion and atmosphere. What stands out is that formal structure in Hard House emerges not from harmonic development or modulation, but from textural contrast: the alternation between sparse and dense moments around a stable harmonic core.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

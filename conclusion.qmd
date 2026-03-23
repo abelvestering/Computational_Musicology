@@ -4,17 +4,15 @@ title: "Conclusion"
 
 ## Summary of Findings
 
-Across five weeks of analysis, the computational evidence consistently supports the central claim of this portfolio: **Minimal Tech House and Hard House are measurably distinct genres**, not just different labels for similar music. The evidence builds cumulatively across multiple independent methods.
+Across five weeks of analysis, the computational evidence consistently supports the central claim of this portfolio: Minimal Tech House and Hard House are measurably distinct genres, not just different labels for similar music.
 
-The track-level feature analysis (Week 8) established that the two genres occupy different regions of Spotify's feature space, with energy, tempo, and loudness all separating the genres cleanly at the corpus level. The chroma analysis of *East Bridge Romance* showed that even at the individual track level, Hard House relies on textural contrast around a narrow harmonic core rather than harmonic complexity.
+At the corpus level (Week 8), the two genres occupy clearly different regions of Spotify's feature space. Energy, tempo, and loudness all separate them cleanly, and the chroma analysis of *East Bridge Romance* showed that even within a single Hard House track, form emerges from textural contrast around a narrow harmonic core rather than from harmonic complexity.
 
-The self-similarity analysis (Week 9) revealed that chroma and timbre SSMs capture fundamentally different dimensions of musical structure. A track can repeat the same chords throughout while still evolving texturally — a distinction that would be invisible in a purely harmonic analysis.
+Looking at individual track structure (Week 9), the self-similarity matrices revealed that chroma and timbre capture fundamentally different dimensions. A track can repeat the same chords throughout while still evolving texturally, a distinction that would be invisible in a purely harmonic analysis. The keygram analysis (Week 10) reinforced this: EDM tracks like *Wood* maintain a stable key with no modulation, reflecting a compositional philosophy built on repetition rather than development.
 
-The tonal centre analysis (Week 10) confirmed through keygram profiling that EDM tracks like *Wood* maintain a stable key throughout with no modulation, representing a compositional philosophy fundamentally different from traditional tonal music.
+At the rhythmic level (Week 11), Hard House maintains a rigid, unwavering beat, while Minimal Tech House distributes its rhythmic energy more diffusely. The tempograms and novelty functions make this contrast visually and numerically concrete.
 
-The temporal analysis (Week 11) showed that rhythmic structure reinforces the genre distinction at the track level. Hard House maintains a rigid, unwavering beat, while Minimal Tech House distributes its rhythmic energy more diffusely.
-
-Finally, classification and clustering (Week 12) brought everything together. A random forest classifier achieved approximately 99.5% accuracy with 10-fold cross-validation, and a reduced model using only five features performed equally well. Hierarchical clustering recovered the genre boundary without any labels, validating the supervised results with an independent, unsupervised approach.
+The classification and clustering analysis (Week 12) tied everything together. A random forest classifier achieved approximately 99.5% accuracy with 10-fold cross-validation, and a reduced model using only five features performed equally well. Hierarchical clustering recovered the genre boundary without any labels, validating the supervised results through an independent, unsupervised approach.
 
 ## Key Metrics
 
@@ -25,11 +23,11 @@ Finally, classification and clustering (Week 12) brought everything together. A 
 | Total tracks analysed | 861 |
 | Independent analysis methods | 5 |
 
-The three features that carry the most discriminatory power are **Tempo** (120–128 vs 138–150 BPM), **Loudness** (−10 dB vs −6 dB), and **Energy** (sustained groove vs explosive intensity).
+The three features with the most discriminatory power are Tempo (120–128 vs 138–150 BPM), Loudness (−10 dB vs −6 dB), and Energy (sustained groove vs explosive intensity).
 
 ## Who Could Benefit
 
-These findings are relevant for several audiences. **DJs and curators** could apply similar feature-based approaches to sort large music libraries, identify tracks that bridge genres, or discover unexpected overlaps between playlists. **Music producers** gain concrete insight into which measurable properties define genre identity, helping them position their tracks within or across genre boundaries. **Researchers in Music Information Retrieval** can see how standard Spotify features perform on a focused, two-genre classification task — and, importantly, where those features fall short. Spotify's features say nothing about arrangement, mixing technique, sound design, or cultural context, all of which are central to how listeners and practitioners actually experience these genres.
+These findings are relevant for several audiences. DJs and curators could apply similar feature-based approaches to sort large music libraries, identify tracks that bridge genres, or discover unexpected overlaps between playlists. Music producers gain concrete insight into which measurable properties define genre identity, helping them position their tracks within or across genre boundaries. Researchers in Music Information Retrieval can see how standard Spotify features perform on a focused, two-genre classification task, and importantly, where those features fall short. Spotify's features say nothing about arrangement, mixing technique, sound design, or cultural context, all of which are central to how listeners and practitioners actually experience these genres.
 
 ## Limitations & Future Work
 
@@ -37,4 +35,4 @@ This analysis relies entirely on Spotify's proprietary audio features and on chr
 
 The corpus itself is limited to two curated playlists, meaning that the results reflect these particular selections rather than the genres as a whole. A track that appears in one playlist but not another might change the analysis. Future work could expand the corpus to include multiple playlists from different curators, incorporate additional analytical methods like structural segmentation or harmonic rhythm analysis, or apply the same methodology to genre pairs where the distinction is less clearcut.
 
-Despite these limitations, the consistency of results across five independent analysis methods — spanning feature distributions, self-similarity, tonal analysis, temporal analysis, and machine learning — provides strong converging evidence. What the body feels on the dance floor — the difference between swaying and jumping — has a computational signature. The machine can hear it too.
+Despite these limitations, the consistency of results across five independent analysis methods (feature distributions, self-similarity, tonal analysis, temporal analysis, and machine learning) provides strong converging evidence. What the body feels on the dance floor, the difference between swaying and jumping, has a computational signature. The machine can hear it too.

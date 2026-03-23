@@ -4,7 +4,7 @@
   --cyan: #00d4ff;
   --red: #ff2d55;
   --card-bg: #111118;
-  --card-border: rgba(255,255,255,0.06);
+  --card-border: rgba(255,255,255,0.12);
   --text: #d0d4dc;
   --text-bright: #f0f2f5;
   --text-muted: #7a8090;
@@ -13,7 +13,11 @@
 body { font-family: 'Source Sans 3', sans-serif !important; }
 h1,h2,h3,h4,h5,h6 { font-family: 'DM Sans', sans-serif !important; }
 
-/* Navbar */
+/* Sticky Navbar */
+.navbar {
+  position: sticky !important; top: 0 !important; z-index: 1030 !important;
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--card-border);
+}
 .navbar-title {
   font-family: 'DM Sans', sans-serif !important;
   font-weight: 800 !important; font-size: 1.1rem !important;
@@ -28,7 +32,6 @@ h1,h2,h3,h4,h5,h6 { font-family: 'DM Sans', sans-serif !important; }
 
 /* TOC sidebar */
 .sidebar nav[role="doc-toc"] { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; }
-.sidebar nav[role="doc-toc"] a { transition: color 0.2s; }
 .sidebar nav[role="doc-toc"] a.active { color: var(--cyan) !important; border-left-color: var(--cyan) !important; }
 
 /* Section headers */
@@ -44,18 +47,69 @@ h3 { margin-top: 2rem; }
 .genre-tag.minimal { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.25); color: var(--cyan); }
 .genre-tag.hard { background: rgba(255,45,85,0.1); border: 1px solid rgba(255,45,85,0.25); color: var(--red); }
 
-/* Alerts */
-.alert-info { background: rgba(0,212,255,0.06) !important; border: 1px solid rgba(0,212,255,0.2) !important; border-radius: 8px !important; }
-.alert-info strong { color: var(--cyan) !important; }
+/* Callouts */
+.callout { border-radius: 8px !important; }
 
-/* Tables */
+/* DataTables */
+table.dataTable { color: #e8ecf4 !important; border-collapse: collapse !important; }
 table.dataTable thead th {
   font-family: 'DM Sans', sans-serif !important;
+  color: #fff !important; background: #1e2038 !important;
   font-weight: 600; font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase;
+  border-bottom: 2px solid rgba(255,255,255,0.2) !important; padding: 10px 14px !important;
 }
+table.dataTable tbody td {
+  color: #c8ccd8 !important; padding: 10px 14px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+table.dataTable tbody tr:nth-child(odd) { background: rgba(255,255,255,0.04) !important; }
+table.dataTable tbody tr:nth-child(even) { background: rgba(255,255,255,0.08) !important; }
+table.dataTable tbody tr:hover { background: rgba(0,212,255,0.12) !important; }
+.dataTables_wrapper { color: #bbb !important; }
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+  background: #1e2038 !important; color: #e0e0e8 !important;
+  border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 5px !important;
+  padding: 4px 8px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button { color: #bbb !important; }
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: var(--cyan) !important; color: #000 !important; border-color: var(--cyan) !important;
+}
+.dataTables_wrapper .dataTables_info { color: #999 !important; }
+
+/* Regular markdown tables */
+table:not(.dataTable) { color: #e0e4f0 !important; }
+table:not(.dataTable) th {
+  background: #1e2038 !important; color: #fff !important;
+  font-family: 'DM Sans', sans-serif; font-weight: 600;
+  border-bottom: 2px solid rgba(255,255,255,0.2) !important; padding: 10px 14px !important;
+}
+table:not(.dataTable) td {
+  color: #c8ccd8 !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; padding: 10px 14px !important;
+}
+
+/* Code blocks */
+pre.sourceCode {
+  background: #0d0d14 !important; border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 8px !important; padding: 1rem !important; font-size: 0.82rem !important;
+}
+details summary {
+  font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem;
+  color: var(--cyan); cursor: pointer; padding: 0.4rem 0;
+}
+details summary:hover { opacity: 0.8; }
 
 /* Images */
 img { border-radius: 6px; max-width: 100%; }
+/* Externally generated plots (compmus PNGs) — framed lightbox style */
+img[src*="Rplot"] {
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
 
 /* Tabs */
 .nav-tabs .nav-link { font-family: 'DM Sans', sans-serif !important; font-weight: 500; font-size: 0.82rem; }

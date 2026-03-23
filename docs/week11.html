@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 11: Tempo &amp; Rhythm – Frequency Spectrum</title>
+<title>Week 11: Tempo &amp; Rhythm – Groovy House vs Hard House</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,11 +20,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -84,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Frequency Spectrum</span>
+    <span class="navbar-title">Groovy House vs Hard House</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -167,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Week 11: Tempo &amp; Rhythm</h1>
+<div class="quarto-title-block"><div><h1 class="title">Week 11: Tempo &amp; Rhythm</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -190,7 +224,22 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="corpus-tempo-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="corpus-tempo-distribution">Corpus Tempo Distribution</h2>
+<p>A histogram with 2 BPM bins compares the tempo distribution across both genres using overlaid bars. This approach reveals not just the central tendency but the full distributional shape, including overlap zones and bimodality.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Histogram: tempo distribution per genre</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlaid histogram with 2 BPM bins to compare tempo distributions</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># position = "identity" overlays rather than stacks the bars</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Tempo, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">position =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Tempo Distribution Across the Corpus"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Each bar = 2 BPM | 861 tracks"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Tempo (BPM)"</span>, <span class="at">y =</span> <span class="st">"Number of Tracks"</span>, <span class="at">fill =</span> <span class="cn">NULL</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -199,11 +248,36 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>The histogram confirms that tempo is one of the strongest differentiators between the two genres. <strong>Hard House</strong> clusters sharply around 138–150 BPM, reflecting the genre’s aggressive, high-energy character. <strong>Minimal Tech House</strong> concentrates around 120–128 BPM, which is the classic house tempo range associated with groove-oriented, danceable rhythms. The two distributions barely overlap, with a near-empty zone between 128 and 138 BPM functioning as a natural boundary. This suggests that tempo alone could serve as a reasonably effective genre predictor for these two subgenres.</p>
+<p>The histogram confirms that tempo is one of the strongest differentiators between the two genres. Hard House clusters sharply around 138–150 BPM, reflecting the genre’s aggressive, high-energy character. Minimal Tech House concentrates around 120–128 BPM, which is the classic house tempo range associated with groove-oriented, danceable rhythms. The two distributions barely overlap, with a near-empty zone between 128 and 138 BPM functioning as a natural boundary. Tempo alone could serve as a reasonably effective genre predictor for these two subgenres.</p>
 </section>
 <section id="novelty-functions-first-60-seconds" class="level2">
 <h2 class="anchored" data-anchor-id="novelty-functions-first-60-seconds">Novelty Functions: First 60 Seconds</h2>
+<p>Novelty functions are computed by Sonic Visualiser and measure the spectral flux (rate of change) in the audio signal over time. Peaks correspond to rhythmic onsets. Two representative tracks are compared in a faceted line plot.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Novelty functions: spectral flux over time</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load novelty curves exported from Sonic Visualiser</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns: TIME (seconds), VALUE (spectral flux magnitude)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>hard_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"mytrack-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Hard House"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>min_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"minimal-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Minimal Tech House"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Faceted line plot comparing the first 60 seconds of each track</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(hard_nov, min_nov) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> VALUE, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">60</span>) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Novelty Functions: First 60 Seconds"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Onset strength over time"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Novelty"</span>, <span class="at">colour =</span> <span class="cn">NULL</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -212,15 +286,30 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. <strong>Hard House</strong> (<em>It Ain’t Over</em>) shows a pattern of sharp, evenly-spaced peaks with high amplitude — a direct reflection of its relentless, four-on-the-floor kick drum pattern where every beat hits hard. <strong>Minimal Tech House</strong> (<em>Overflow</em>) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.</p>
+<p>The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. Hard House (<em>It Ain’t Over</em>) shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Minimal Tech House (<em>Overflow</em>) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.</p>
 </section>
 <section id="tempograms-hard-house-it-aint-over" class="level2">
 <h2 class="anchored" data-anchor-id="tempograms-hard-house-it-aint-over">Tempograms: Hard House (It Ain’t Over)</h2>
+<p>Tempograms visualise how rhythmic energy is distributed across different tempo frequencies over time. The ACT (autocorrelation) method detects periodicity in the onset signal, while the DFT (Fourier) method captures harmonic structure in the rhythm. Both are rendered as heatmaps using <code>geom_raster</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">ACT</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">DFT</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
+<details class="code-fold">
+<summary>ACT tempogram: Hard House</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load ACT tempogram data and reshape from wide to long format</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Reciprocal y-axis transforms lag values to BPM</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"mytrack-act.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME, <span class="at">names_to =</span> <span class="st">"tempo"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tempo =</span> <span class="fu">as.numeric</span>(tempo)) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> tempo, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">transform =</span> <span class="fu">c</span>(<span class="st">"reciprocal"</span>, <span class="st">"reverse"</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">350</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ACT Tempogram: Hard House"</span>, <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Tempo (BPM)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -232,6 +321,18 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
+<details class="code-fold">
+<summary>DFT tempogram: Hard House</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DFT tempogram captures harmonic structure in the rhythm</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"mytrack-dft.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME, <span class="at">names_to =</span> <span class="st">"tempo"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tempo =</span> <span class="fu">as.numeric</span>(tempo)) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> tempo, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"DFT Tempogram: Hard House"</span>, <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Tempo (BPM)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -251,6 +352,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
+<details class="code-fold">
+<summary>ACT tempogram: Minimal Tech House</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"minimal-act.csv"</span>,<span class="at">show_col_types=</span>F)<span class="sc">|&gt;</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME,<span class="at">names_to=</span><span class="st">"tempo"</span>)<span class="sc">|&gt;</span><span class="fu">mutate</span>(<span class="at">tempo=</span><span class="fu">as.numeric</span>(tempo))<span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>TIME,<span class="at">y=</span>tempo,<span class="at">fill=</span>value))<span class="sc">+</span><span class="fu">geom_raster</span>()<span class="sc">+</span><span class="fu">scale_y_continuous</span>(<span class="at">transform=</span><span class="fu">c</span>(<span class="st">"reciprocal"</span>,<span class="st">"reverse"</span>),<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">50</span>,<span class="dv">350</span>,<span class="dv">50</span>))<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide=</span><span class="st">"none"</span>)<span class="sc">+</span><span class="fu">theme_freq</span>(<span class="dv">11</span>)<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid=</span><span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">"ACT Tempogram: Minimal Tech House"</span>,<span class="at">x=</span><span class="st">"Time (s)"</span>,<span class="at">y=</span><span class="st">"Tempo (BPM)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -262,6 +369,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
+<details class="code-fold">
+<summary>DFT tempogram: Minimal Tech House</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"minimal-dft.csv"</span>,<span class="at">show_col_types=</span>F)<span class="sc">|&gt;</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME,<span class="at">names_to=</span><span class="st">"tempo"</span>)<span class="sc">|&gt;</span><span class="fu">mutate</span>(<span class="at">tempo=</span><span class="fu">as.numeric</span>(tempo))<span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>TIME,<span class="at">y=</span>tempo,<span class="at">fill=</span>value))<span class="sc">+</span><span class="fu">geom_raster</span>()<span class="sc">+</span><span class="fu">scale_fill_viridis_c</span>(<span class="at">guide=</span><span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>)<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid=</span><span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">"DFT Tempogram: Minimal Tech House"</span>,<span class="at">x=</span><span class="st">"Time (s)"</span>,<span class="at">y=</span><span class="st">"Tempo (BPM)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -275,9 +388,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
-<p>The tempograms complement the novelty analysis by showing how rhythmic energy is distributed across tempo frequencies over time. The Hard House ACT tempogram displays a <strong>strong, consistent horizontal band</strong> at the track’s tempo, confirming a metrically rigid, unwavering beat. The DFT tempogram reveals additional energy at integer multiples and sub-multiples of the main tempo — harmonic artifacts that reflect the regularity of the pulse. For Minimal Tech House, the energy distribution is noticeably <strong>more diffuse</strong>: the rhythmic pulse is present but less forcefully articulated, consistent with a genre that favours subtlety over impact.</p>
-<p>Together with the self-similarity analysis from Week 9, these tempograms complete the picture: both genres are loop-based and repetitive, but Hard House asserts this through rhythmic rigidity, while Minimal Tech House expresses it through gradual textural continuity.</p>
+<p>The tempograms complement the novelty analysis by showing how rhythmic energy is distributed across tempo frequencies over time. The Hard House ACT tempogram displays a strong, consistent horizontal band at the track’s tempo, pointing to a metrically rigid, unwavering beat. The DFT tempogram reveals additional energy at integer multiples and sub-multiples of the main tempo, harmonic artifacts that reflect the regularity of the pulse. For Minimal Tech House, the energy distribution is noticeably more diffuse: the rhythmic pulse is present but less forcefully articulated, consistent with a genre that favours subtlety over impact.</p>
+<p>Together with the self-similarity analysis from Week 9, these tempograms complete the picture. Both genres are loop-based and repetitive, but Hard House asserts this through rhythmic rigidity, while Minimal Tech House expresses it through gradual textural continuity.</p>
 
+
+<!-- -->
 
 </section>
 </section>
@@ -353,6 +468,57 @@ ul.task-list li input[type="checkbox"] {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -682,7 +848,159 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
-  </script>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Week 11: Tempo &amp; Rhythm"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Temporal Structure and Rhythmic Organisation</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>Tempo is one of the most immediate perceptual differences between Minimal Tech House and Hard House. This section combines corpus-level analysis (tempo distribution) with track-level analysis (novelty functions and tempograms) to examine how rhythmic pacing and pulse stability differ between the two genres.</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Corpus Tempo Distribution</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>A histogram with 2 BPM bins compares the tempo distribution across both genres using overlaid bars. This approach reveals not just the central tendency but the full distributional shape, including overlap zones and bimodality.</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Histogram: tempo distribution per genre"</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlaid histogram with 2 BPM bins to compare tempo distributions</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># position = "identity" overlays rather than stacks the bars</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corpus, <span class="fu">aes</span>(<span class="at">x =</span> Tempo, <span class="at">fill =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">position =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Tempo Distribution Across the Corpus"</span>,</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Each bar = 2 BPM | 861 tracks"</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Tempo (BPM)"</span>, <span class="at">y =</span> <span class="st">"Number of Tracks"</span>, <span class="at">fill =</span> <span class="cn">NULL</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>The histogram confirms that tempo is one of the strongest differentiators between the two genres. Hard House clusters sharply around 138–150 BPM, reflecting the genre's aggressive, high-energy character. Minimal Tech House concentrates around 120–128 BPM, which is the classic house tempo range associated with groove-oriented, danceable rhythms. The two distributions barely overlap, with a near-empty zone between 128 and 138 BPM functioning as a natural boundary. Tempo alone could serve as a reasonably effective genre predictor for these two subgenres.</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Novelty Functions: First 60 Seconds</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>Novelty functions are computed by Sonic Visualiser and measure the spectral flux (rate of change) in the audio signal over time. Peaks correspond to rhythmic onsets. Two representative tracks are compared in a faceted line plot.</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Novelty functions: spectral flux over time"</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Load novelty curves exported from Sonic Visualiser</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns: TIME (seconds), VALUE (spectral flux magnitude)</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>hard_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"mytrack-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Hard House"</span>)</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>min_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"minimal-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Minimal Tech House"</span>)</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Faceted line plot comparing the first 60 seconds of each track</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(hard_nov, min_nov) <span class="sc">|&gt;</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> VALUE, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">60</span>) <span class="sc">+</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Novelty Functions: First 60 Seconds"</span>,</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Onset strength over time"</span>,</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Novelty"</span>, <span class="at">colour =</span> <span class="cn">NULL</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. Hard House (*It Ain't Over*) shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Minimal Tech House (*Overflow*) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tempograms: Hard House (It Ain't Over)</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>Tempograms visualise how rhythmic energy is distributed across different tempo frequencies over time. The ACT (autocorrelation) method detects periodicity in the onset signal, while the DFT (Fourier) method captures harmonic structure in the rhythm. Both are rendered as heatmaps using <span class="in">`geom_raster`</span>.</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="fu">### ACT</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "ACT tempogram: Hard House"</span></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="co"># Load ACT tempogram data and reshape from wide to long format</span></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Reciprocal y-axis transforms lag values to BPM</span></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"mytrack-act.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME, <span class="at">names_to =</span> <span class="st">"tempo"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tempo =</span> <span class="fu">as.numeric</span>(tempo)) <span class="sc">|&gt;</span></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> tempo, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">transform =</span> <span class="fu">c</span>(<span class="st">"reciprocal"</span>, <span class="st">"reverse"</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">350</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ACT Tempogram: Hard House"</span>, <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Tempo (BPM)"</span>)</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a><span class="fu">### DFT</span></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "DFT tempogram: Hard House"</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="co"># DFT tempogram captures harmonic structure in the rhythm</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"mytrack-dft.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME, <span class="at">names_to =</span> <span class="st">"tempo"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tempo =</span> <span class="fu">as.numeric</span>(tempo)) <span class="sc">|&gt;</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> tempo, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"DFT Tempogram: Hard House"</span>, <span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Tempo (BPM)"</span>)</span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tempograms: Minimal Tech House (Overflow)</span></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### ACT</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "ACT tempogram: Minimal Tech House"</span></span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"minimal-act.csv"</span>,<span class="at">show_col_types=</span>F)<span class="sc">|&gt;</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME,<span class="at">names_to=</span><span class="st">"tempo"</span>)<span class="sc">|&gt;</span><span class="fu">mutate</span>(<span class="at">tempo=</span><span class="fu">as.numeric</span>(tempo))<span class="sc">|&gt;</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>TIME,<span class="at">y=</span>tempo,<span class="at">fill=</span>value))<span class="sc">+</span><span class="fu">geom_raster</span>()<span class="sc">+</span><span class="fu">scale_y_continuous</span>(<span class="at">transform=</span><span class="fu">c</span>(<span class="st">"reciprocal"</span>,<span class="st">"reverse"</span>),<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">50</span>,<span class="dv">350</span>,<span class="dv">50</span>))<span class="sc">+</span></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">guide=</span><span class="st">"none"</span>)<span class="sc">+</span><span class="fu">theme_freq</span>(<span class="dv">11</span>)<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid=</span><span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">"ACT Tempogram: Minimal Tech House"</span>,<span class="at">x=</span><span class="st">"Time (s)"</span>,<span class="at">y=</span><span class="st">"Tempo (BPM)"</span>)</span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### DFT</span></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "DFT tempogram: Minimal Tech House"</span></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| out-width: "100%"</span></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"minimal-dft.csv"</span>,<span class="at">show_col_types=</span>F)<span class="sc">|&gt;</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>TIME,<span class="at">names_to=</span><span class="st">"tempo"</span>)<span class="sc">|&gt;</span><span class="fu">mutate</span>(<span class="at">tempo=</span><span class="fu">as.numeric</span>(tempo))<span class="sc">|&gt;</span></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>TIME,<span class="at">y=</span>tempo,<span class="at">fill=</span>value))<span class="sc">+</span><span class="fu">geom_raster</span>()<span class="sc">+</span><span class="fu">scale_fill_viridis_c</span>(<span class="at">guide=</span><span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_freq</span>(<span class="dv">11</span>)<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid=</span><span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">"DFT Tempogram: Minimal Tech House"</span>,<span class="at">x=</span><span class="st">"Time (s)"</span>,<span class="at">y=</span><span class="st">"Tempo (BPM)"</span>)</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interpretation</span></span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>The tempograms complement the novelty analysis by showing how rhythmic energy is distributed across tempo frequencies over time. The Hard House ACT tempogram displays a strong, consistent horizontal band at the track's tempo, pointing to a metrically rigid, unwavering beat. The DFT tempogram reveals additional energy at integer multiples and sub-multiples of the main tempo, harmonic artifacts that reflect the regularity of the pulse. For Minimal Tech House, the energy distribution is noticeably more diffuse: the rhythmic pulse is present but less forcefully articulated, consistent with a genre that favours subtlety over impact.</span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>Together with the self-similarity analysis from Week 9, these tempograms complete the picture. Both genres are loop-based and repetitive, but Hard House asserts this through rhythmic rigidity, while Minimal Tech House expresses it through gradual textural continuity.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

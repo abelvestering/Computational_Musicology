@@ -9,3 +9,6 @@ old_files/
 _freeze/
 *.png
 !docs/**/*.png
+
+/.quarto/
+**/*.quarto_ipynb

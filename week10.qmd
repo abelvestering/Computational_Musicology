@@ -13,24 +13,45 @@ This section explores tonal structure through key estimation. A global key profi
 
 ## Global Key Profile: Wood
 
+The key profile is computed by averaging the NNLS Chroma intensities across the full track for each of the 12 pitch classes. The resulting bar chart acts as a tonal fingerprint, revealing which notes dominate the harmonic content.
+
 ```{r}
+#| code-summary: "Key profile: average chroma intensity per pitch class"
 #| fig-width: 10
 #| fig-height: 4
 #| out-width: "100%"
-wood_data <- read_csv("wood.csv",show_col_types=F)
-wood_avg <- wood_data |> select(-TIME) |> summarise(across(everything(),mean)) |>
-  pivot_longer(everything(),names_to="Pitch_Class",values_to="Intensity") |>
-  mutate(Pitch_Class=factor(Pitch_Class,levels=c("C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B")))
-ggplot(wood_avg,aes(x=Pitch_Class,y=Intensity,fill=Intensity))+geom_col(width=0.7)+
-  scale_fill_viridis_c(guide="none",option="plasma")+theme_freq(13)+
-  labs(title="Overall Key Profile: 'Wood'",subtitle="Average pitch-class intensity across the full track",x="Pitch Class",y="Average Intensity")
+
+# Load chroma data exported from Sonic Visualiser (NNLS Chroma plugin)
+wood_data <- read_csv("wood.csv", show_col_types = FALSE)
+
+# Average each pitch class intensity across the full track duration
+wood_avg <- wood_data |>
+  select(-TIME) |>
+  summarise(across(everything(), mean)) |>
+  pivot_longer(everything(), names_to = "Pitch_Class", values_to = "Intensity") |>
+  mutate(Pitch_Class = factor(Pitch_Class,
+    levels = c("C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B")))
+
+# Bar chart showing which pitch classes dominate
+ggplot(wood_avg, aes(x = Pitch_Class, y = Intensity, fill = Intensity)) +
+  geom_col(width = 0.7) +
+  scale_fill_viridis_c(guide = "none", option = "plasma") +
+  theme_freq(13) +
+  labs(
+    title = "Overall Key Profile: 'Wood'",
+    subtitle = "Average pitch-class intensity across the full track",
+    x = "Pitch Class", y = "Average Intensity"
+  )
 ```
 
-The bar chart shows the average intensity of each pitch class across the entire duration of *Wood*. A small number of pitch classes dominate clearly, while others are nearly absent. In EDM, where harmonic material is deliberately narrow and heavily reinforced through repetition, this profile acts as a **compact fingerprint of tonal emphasis**. The pronounced peaks connect directly to the loop-based patterns visible in the Week 9 chroma analysis — the same few notes that form the harmonic loop are the ones that accumulate the highest average intensity over time.
+The bar chart shows the average intensity of each pitch class across the entire duration of *Wood*. A small number of pitch classes dominate clearly, while others are nearly absent. In EDM, where harmonic material is deliberately narrow and heavily reinforced through repetition, this profile acts as a compact fingerprint of tonal emphasis. The pronounced peaks connect directly to the loop-based patterns visible in the Week 9 chroma analysis: the same few notes that form the harmonic loop are the ones that accumulate the highest average intensity over time.
 
 ## Keygram: Wood
 
+The keygram computes a Euclidean distance between the chroma profile of each time window and the Krumhansl-Kessler key templates for all 24 major and minor keys. Darker cells indicate a closer match. This method reveals whether and when key changes occur.
+
 ```{r}
+#| code-summary: "Keygram: Krumhansl-Kessler key estimation over time"
 #| fig-width: 12
 #| fig-height: 5
 #| out-width: "100%"
@@ -53,7 +74,7 @@ ggplot(kl,aes(x=start+duration/2,width=duration,y=name,fill=d))+geom_tile()+
   theme(axis.text.y=element_text(size=7))
 ```
 
-The keygram matches the chroma content of each time window against all 24 major and minor key templates using the Krumhansl-Kessler profiles. Darker horizontal bands indicate keys that consistently match well throughout the track. For *Wood*, one or two keys dominate across the entire duration with no visible modulation — the dark bands remain stable from beginning to end. This is consistent with the block structure observed in the Week 9 SSM and confirms that compositional form in this genre relies on **harmonic repetition** rather than harmonic development. This contrasts fundamentally with traditional tonal music, where key changes serve as a primary structural device to create tension and resolution.
+The keygram matches the chroma content of each time window against all 24 major and minor key templates using the Krumhansl-Kessler profiles. Darker horizontal bands indicate keys that consistently match well throughout the track. For *Wood*, one or two keys dominate across the entire duration with no visible modulation; the dark bands remain stable from beginning to end. This is consistent with the block structure observed in the Week 9 SSM and shows that compositional form in this genre relies on harmonic repetition rather than harmonic development. In traditional tonal music, key changes serve as a primary structural device to create tension and resolution, but EDM takes a fundamentally different approach.
 
 ## Corpus Data Explorer
 

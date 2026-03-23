@@ -10,13 +10,13 @@ source("setup.R")
 
 ## Can Machines Hear the Difference Between Groove and Aggression?
 
-This project investigates whether the stylistic contrast between **Minimal Tech House** and **Hard House** — two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum — can be identified and quantified through computational audio features.
+This project investigates whether the stylistic contrast between Minimal Tech House and Hard House, two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum, can be identified and quantified through computational audio features.
 
 Using Spotify's track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like *groovy*, *hypnotic*, *aggressive*, and *relentless* into measurable musical data.
 
 ::: {.callout-note}
 ## Central question
-Can the stylistic gap between two EDM subgenres be confirmed through computational evidence — and if so, which features carry the distinction?
+Can the stylistic gap between two EDM subgenres be confirmed through computational evidence, and if so, which features carry the distinction?
 :::
 
 ## The Two Playlists
@@ -27,15 +27,15 @@ Can the stylistic gap between two EDM subgenres be confirmed through computation
 
 <span class="genre-tag hard">Hard House</span>
 
-**Club Heartbroken** contains 325 tracks rooted in the UK rave scene. This genre pushes tempo, impact, and emotional intensity to the extreme: 138–150 BPM, aggressive kicks, and maximally compressed masters. I chose this playlist because it represents the opposite end of the EDM spectrum — maximum intensity instead of minimal restraint.
+**Club Heartbroken** contains 325 tracks rooted in the UK rave scene. This genre pushes tempo, impact, and emotional intensity to the extreme: 138–150 BPM, aggressive kicks, and maximally compressed masters. I chose this playlist because it sits at the opposite end of the EDM spectrum, favouring maximum intensity over minimal restraint.
 
 ## Creative Process
 
-As a DJ who plays both minimal and hard sets, I experience the contrast between these genres physically. Minimal Tech House makes you *sway* — it is music for sustained, hypnotic movement. Hard House makes you *jump* — it demands immediate, explosive energy. This project tests whether that embodied experience is computationally verifiable. Every analysis in this portfolio is designed to ask the same question: **can the machine hear what the body already knows?**
+As a DJ who plays both minimal and hard sets, I experience the contrast between these genres physically. Minimal Tech House makes you *sway*; it is music for sustained, hypnotic movement. Hard House makes you *jump*; it demands immediate, explosive energy. This project tests whether that embodied experience is computationally verifiable. Every analysis in this portfolio asks the same question: can the machine hear what the body already knows?
 
 ## Assumptions & Limitations
 
-Several assumptions underlie this analysis. Spotify's audio features are treated as ground truth, but they are black-box estimates — we do not know the exact algorithms behind features like "energy" or "danceability", and they may not capture what musicians or listeners mean by those terms. Both playlists were curated by individual users and reflect personal taste rather than a systematic sample of either genre. The corpus is also imbalanced (536 vs 325 tracks), which could bias some analyses; the classifier uses stratified cross-validation to mitigate this. Finally, chroma and timbre analyses rely on Sonic Visualiser exports, which use specific algorithms (NNLS Chroma, libextract MFCCs) with their own assumptions about tuning and spectral resolution.
+Several assumptions underlie this analysis. Spotify's audio features are treated as ground truth, but they are black-box estimates. We do not know the exact algorithms behind features like "energy" or "danceability", and they may not capture what musicians or listeners mean by those terms. Both playlists were curated by individual users and reflect personal taste rather than a systematic sample of either genre. The corpus is also imbalanced (536 vs 325 tracks), which could bias some analyses; the classifier uses stratified cross-validation to mitigate this. Finally, chroma and timbre analyses rely on Sonic Visualiser exports, which use specific algorithms (NNLS Chroma, libextract MFCCs) with their own assumptions about tuning and spectral resolution.
 
 These limitations mean that the conclusions drawn here are indicative rather than definitive. They show what Spotify's feature space can and cannot capture about these genres, and the confidence in final conclusions is inherently limited by the accuracy of the assumptions described above.
 

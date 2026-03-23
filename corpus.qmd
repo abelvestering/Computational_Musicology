@@ -13,13 +13,13 @@ The corpus consists of 861 tracks drawn from two Spotify playlists, each represe
 
 ### Groovy Minimal House
 
-<span class="genre-tag minimal">536 tracks — hypnotic basslines, groove-driven repetition</span>
+<span class="genre-tag minimal">536 tracks, hypnotic basslines, groove-driven repetition</span>
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2Alz8zsZFJLzDthh37proC?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ### Club Heartbroken
 
-<span class="genre-tag hard">325 tracks — aggressive kicks, maximal compression</span>
+<span class="genre-tag hard">325 tracks, aggressive kicks, maximal compression</span>
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5uOkatltA5XM6mN4HHeIT6?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 

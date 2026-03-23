@@ -1,29 +1,181 @@
 ---
-title: "Week 9: Self-Similarity"
+title: "Week 9: Self-Similarity & Timbre"
 ---
+
+```{r setup}
+#| include: false
+source("setup.R")
+```
 
 ## Self-Similarity Matrices
 
-A Self-Similarity Matrix (SSM) compares every moment in a track with every other moment, producing a visual map of structural repetition and contrast. By computing SSMs from both chroma (harmonic) and timbre (textural) features, we can examine whether a track's form is driven by harmonic development or by changes in sound texture.
+A Self-Similarity Matrix (SSM) compares every moment in a track with every other moment, producing a visual map of structural repetition and contrast. By computing SSMs from both chroma (harmonic) and timbre (textural) features, we can examine whether a track's form is driven by harmonic development or by changes in sound texture. The SSMs below were computed from Sonic Visualiser exports using Euclidean distance on downsampled chroma and MFCC frames.
 
-## Harmonic Structure: Wood
+## Chroma Self-Similarity: Wood
+
+The chroma SSM for *Wood* was computed from NNLS Chroma features exported via Sonic Visualiser. The chroma vectors were downsampled (every 50th frame) and the Euclidean distance between all pairs was calculated and plotted as a heatmap.
+
+```{r}
+#| eval: false
+#| code-summary: "Chroma SSM: Wood (Euclidean distance)"
+
+# Read NNLS Chroma export from Sonic Visualiser
+wood <- read_csv("wood.csv", show_col_types = FALSE)
+chroma_mat <- as.matrix(select(wood, -TIME))
+
+# Downsample: take every 50th frame
+idx <- seq(1, nrow(chroma_mat), by = 50)
+chroma_small <- chroma_mat[idx, ]
+time_w <- wood$TIME[idx]
+
+# Compute pairwise Euclidean distance
+dist_w <- as.matrix(dist(chroma_small, method = "euclidean"))
+
+# Prepare data for ggplot
+ssm_w <- expand.grid(X = 1:nrow(dist_w), Y = 1:nrow(dist_w))
+ssm_w$Distance <- as.vector(dist_w)
+ssm_w$TimeX <- time_w[ssm_w$X]
+ssm_w$TimeY <- time_w[ssm_w$Y]
+
+ggplot(ssm_w, aes(x = TimeX, y = TimeY, fill = Distance)) +
+  geom_raster() +
+  scale_fill_viridis_c(direction = -1, option = "magma") +
+  coord_fixed() +
+  theme_minimal() +
+  labs(title = "Chroma Self-Similarity Matrix: Wood",
+       subtitle = "Calculated using Euclidean distance",
+       x = "Time (seconds)", y = "Time (seconds)")
+```
 
 <div style="text-align:center;">
   <img src="Rplot01.png" style="max-width:600px;width:100%;height:auto;">
 </div>
 
-The chroma-based self-similarity matrix of *Wood* displays a clear block-diagonal structure, with well-defined rectangular regions along the main diagonal. Each block represents a section of the track where harmonic content remains internally consistent, and the sharp transitions between blocks indicate structural boundaries. This confirms that *Wood* is composed of **discrete, recurring harmonic zones** rather than continuous development — typical of loop-based electronic music where form emerges through the layering and removal of elements over a repeating harmonic foundation.
+The chroma-based self-similarity matrix of *Wood* displays a clear block-diagonal structure, with well-defined rectangular regions along the main diagonal. Each block represents a section of the track where harmonic content remains internally consistent, and the sharp transitions between blocks indicate structural boundaries. *Wood* is composed of discrete, recurring harmonic zones rather than continuous development, which is typical of loop-based electronic music where form emerges through the layering and removal of elements over a repeating harmonic foundation.
 
 ## Chroma vs Timbre: Bloed, Zweet en Tranen
+
+The same SSM method is applied to *Bloed, Zweet en Tranen* using both chroma (pitch class) and timbre (MFCC) features. Both SSMs use Euclidean distance on every 50th frame. Comparing the two reveals whether harmonic and timbral structure align or diverge within the same track.
 
 ::: {.panel-tabset}
 
 ### Chroma
+
+```{r}
+#| eval: false
+#| code-summary: "Chroma SSM: Bloed, Zweet en Tranen"
+
+# Read NNLS Chroma export from Sonic Visualiser
+bzt_pitches <- read_csv("bzt-pitches.csv", show_col_types = FALSE)
+chroma_mat <- as.matrix(select(bzt_pitches, -TIME))
+
+# Downsample: take every 50th frame
+idx_c <- seq(1, nrow(chroma_mat), by = 50)
+chroma_small <- chroma_mat[idx_c, ]
+time_c <- bzt_pitches$TIME[idx_c]
+
+# Compute pairwise Euclidean distance
+dist_c <- as.matrix(dist(chroma_small, method = "euclidean"))
+
+# Prepare data for ggplot
+ssm_c <- expand.grid(X = 1:nrow(dist_c), Y = 1:nrow(dist_c))
+ssm_c$Distance <- as.vector(dist_c)
+ssm_c$TimeX <- time_c[ssm_c$X]
+ssm_c$TimeY <- time_c[ssm_c$Y]
+
+ggplot(ssm_c, aes(x = TimeX, y = TimeY, fill = Distance)) +
+  geom_raster() +
+  scale_fill_viridis_c(direction = -1, option = "magma") +
+  coord_fixed() +
+  theme_minimal() +
+  labs(title = "Chroma SSM: Bloed, Zweet en Tranen",
+       x = "Time (s)", y = "Time (s)")
+```
+
 <div style="text-align:center;"><img src="Rplot02.png" style="max-width:600px;width:100%;height:auto;"></div>
 
 ### Timbre
+
+```{r}
+#| eval: false
+#| code-summary: "Timbre SSM: Bloed, Zweet en Tranen (MFCCs)"
+
+# Read MFCC export from Sonic Visualiser (libextract MFCCs)
+bzt_timbre <- read_csv("bzt-timbre.csv", show_col_types = FALSE)
+timbre_mat <- as.matrix(select(bzt_timbre, -TIME))
+
+# Downsample: take every 50th frame
+idx_t <- seq(1, nrow(timbre_mat), by = 50)
+timbre_small <- timbre_mat[idx_t, ]
+time_t <- bzt_timbre$TIME[idx_t]
+
+# Compute pairwise Euclidean distance
+dist_t <- as.matrix(dist(timbre_small, method = "euclidean"))
+
+# Prepare data for ggplot
+ssm_t <- expand.grid(X = 1:nrow(dist_t), Y = 1:nrow(dist_t))
+ssm_t$Distance <- as.vector(dist_t)
+ssm_t$TimeX <- time_t[ssm_t$X]
+ssm_t$TimeY <- time_t[ssm_t$Y]
+
+ggplot(ssm_t, aes(x = TimeX, y = TimeY, fill = Distance)) +
+  geom_raster() +
+  scale_fill_viridis_c(direction = -1, option = "mako") +
+  coord_fixed() +
+  theme_minimal() +
+  labs(title = "Timbre SSM: Bloed, Zweet en Tranen",
+       x = "Time (s)", y = "Time (s)")
+```
+
 <div style="text-align:center;"><img src="Rplot03.png" style="max-width:600px;width:100%;height:auto;"></div>
 
 :::
 
-Comparing the two SSMs reveals that harmonic and timbral structure can diverge significantly within the same track. The **chroma SSM** shows clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The **timbre SSM**, by contrast, is noisier and more irregular — even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. This demonstrates that a track can be **harmonically stable** while remaining **texturally dynamic**, and that chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.
+Comparing the two SSMs shows that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM has clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular. Even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. A track can be harmonically stable while remaining texturally dynamic, and chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.
+
+## Cepstrogram: Bloed, Zweet en Tranen
+
+A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible.
+
+```{r}
+#| code-summary: "Cepstrogram: Bloed, Zweet en Tranen (MFCCs, per-coefficient scaled)"
+#| fig-width: 12
+#| fig-height: 5
+#| out-width: "100%"
+
+# Read MFCC data exported from Sonic Visualiser (libextract MFCCs)
+bzt_timbre <- read_csv("bzt-timbre.csv", show_col_types = F)
+bin_cols <- paste("BIN", 1:21)
+
+# Downsample for readability (every 5th frame)
+bzt_ds <- bzt_timbre[seq(1, nrow(bzt_timbre), by = 5), ]
+
+# Scale each MFCC coefficient independently to 0–1 range
+# This ensures all bins contribute equally to the visualisation
+bzt_scaled <- bzt_ds
+for (col in bin_cols) {
+  vals <- bzt_ds[[col]]
+  rng <- range(vals, na.rm = TRUE)
+  if (rng[2] > rng[1]) {
+    bzt_scaled[[col]] <- (vals - rng[1]) / (rng[2] - rng[1])
+  } else {
+    bzt_scaled[[col]] <- 0
+  }
+}
+
+# Pivot to long format for ggplot
+bzt_long <- bzt_scaled |>
+  pivot_longer(all_of(bin_cols), names_to = "MFCC", values_to = "Value") |>
+  mutate(MFCC = factor(MFCC, levels = rev(bin_cols)))
+
+ggplot(bzt_long, aes(x = TIME, y = MFCC, fill = Value)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_freq(11) +
+  theme(panel.grid = element_blank()) +
+  labs(title = "Cepstrogram: Bloed, Zweet en Tranen",
+       subtitle = "Per-coefficient scaled MFCCs over time",
+       x = "Time (s)", y = "")
+```
+
+The cepstrogram reveals which timbral dimensions change over the course of the track. **BIN 1** (the overall spectral energy) shows clear sectional boundaries, with visible shifts corresponding to verse–chorus transitions. Higher-order coefficients (BIN 2 onward) capture finer textural details: for instance, BIN 2 often tracks the balance between low and high frequency energy, meaning that moments where this coefficient shifts sharply correspond to changes in vocal intensity or the introduction of new instruments. The cepstrogram complements the timbre SSM by showing *which* timbral dimensions change, rather than just *when* they change.

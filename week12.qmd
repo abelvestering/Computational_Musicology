@@ -21,20 +21,26 @@ This section tests whether Spotify's audio features can reliably distinguish Min
 
 ## Confusion Matrix: Random Forest (10-fold CV)
 
+A random forest classifier is trained using `tidymodels` with 10-fold stratified cross-validation. The confusion matrix heatmap shows how many tracks from each genre are correctly or incorrectly classified.
+
 ```{r}
+#| code-summary: "Confusion matrix: random forest 10-fold CV"
 #| fig-width: 7
 #| fig-height: 5
 #| out-width: "100%"
 forest_fit|>collect_predictions()|>conf_mat(truth=Genre,estimate=.pred_class)|>autoplot(type="heatmap")+
   scale_fill_viridis_c(option="plasma")+labs(title="Confusion Matrix: Random Forest (10-fold CV)")+
-  theme_freq(13)+theme(panel.grid=element_blank())
+  theme_freq(13)+theme(panel.grid=element_blank(),legend.position="none")
 ```
 
-The random forest classifier achieves a **10-fold cross-validated accuracy of `r accuracy_val`**, confirming that Minimal Tech House and Hard House are computationally distinguishable with high reliability. The confusion matrix shows that nearly all tracks are correctly classified, with only a handful of misclassifications. These errors likely correspond to boundary tracks that blend characteristics of both genres — a finding that is consistent with the small overlap region visible in the Week 8 scatter plot.
+The random forest classifier achieves a 10-fold cross-validated accuracy of `r accuracy_val`, which shows that Minimal Tech House and Hard House are computationally distinguishable with high reliability. The confusion matrix shows that nearly all tracks are correctly classified, with only a handful of misclassifications. These errors likely correspond to boundary tracks that blend characteristics of both genres, consistent with the small overlap region visible in the Week 8 scatter plot.
 
 ## Feature Importance
 
+Feature importance is extracted from the fitted random forest using the `vip` package. The importance score reflects how much each feature reduces impurity (Gini) across all decision trees. Higher values indicate features that contribute more to separating the genres.
+
 ```{r}
+#| code-summary: "Feature importance: impurity-based variable importance"
 #| fig-width: 10
 #| fig-height: 5
 #| out-width: "100%"
@@ -44,30 +50,37 @@ importance_fit|>extract_fit_parsnip()|>vip::vi()|>mutate(Variable=fct_reorder(Va
   theme_freq(12)+labs(title="Feature Importance: Random Forest",subtitle="Which Spotify features best separate the two genres?",x="Importance (impurity reduction)",y=NULL)
 ```
 
-The feature importance ranking reveals which audio features the classifier relies on most heavily. **Tempo** dominates, which aligns with the near-complete separation visible in the Week 11 histogram. **Danceability**, **Energy**, and **Loudness** follow closely — all features that directly relate to the physical experience of each genre. Features like **Speechiness** and **Liveness** contribute almost nothing to the classification, which makes sense for two purely electronic, instrumental genres where neither speech nor live performance characteristics are relevant.
+The feature importance ranking shows which audio features the classifier relies on most heavily. Tempo dominates, which aligns with the near-complete separation visible in the Week 11 histogram. Danceability, Energy, and Loudness follow closely, all features that directly relate to the physical experience of each genre. Features like Speechiness and Liveness contribute almost nothing to the classification, which makes sense for two purely electronic, instrumental genres where neither speech nor live performance characteristics play a role.
 
 ## Reduced Model: Top 5 Features
 
+To test whether the full 10-feature model is necessary, a reduced random forest is trained using only the top 5 features from the importance ranking. This tests the robustness and parsimony of the genre distinction.
+
 ```{r}
+#| code-summary: "Reduced model: train with top 5 features only"
 reduced_recipe<-recipe(Genre~Tempo+Loudness+Energy+Danceability+Valence,data=corpus_clean)|>step_center(all_predictors())|>step_scale(all_predictors())
 reduced_fit<-workflow()|>add_recipe(reduced_recipe)|>add_model(forest_model)|>fit_resamples(corpus_cv,control=control_resamples(save_pred=T))
 reduced_accuracy<-reduced_fit|>collect_metrics()|>filter(.metric=="accuracy")|>pull(mean)|>round(3)
 ```
 
 ```{r}
+#| code-summary: "Confusion matrix: reduced model"
 #| fig-width: 7
 #| fig-height: 5
 #| out-width: "100%"
 reduced_fit|>collect_predictions()|>conf_mat(truth=Genre,estimate=.pred_class)|>autoplot(type="heatmap")+
   scale_fill_viridis_c(option="plasma")+labs(title="Reduced Model (Top 5 Features)")+
-  theme_freq(13)+theme(panel.grid=element_blank())
+  theme_freq(13)+theme(panel.grid=element_blank(),legend.position="none")
 ```
 
 The reduced model, using only Tempo, Loudness, Energy, Danceability, and Valence, achieves an accuracy of **`r reduced_accuracy`** compared to **`r accuracy_val`** with all ten features. The negligible difference confirms that the genre distinction is primarily encoded in a small set of features tied to tempo, loudness, and energy. The five removed features (Speechiness, Liveness, Instrumentalness, Acousticness, Duration) add almost no discriminatory power for this particular genre pair.
 
 ## Hierarchical Clustering: Dendrogram
 
+As an unsupervised complement to the supervised classifier, hierarchical clustering is applied to a random sample of 60 tracks (30 per genre). Features are standardised, Euclidean distances are computed, and average-linkage clustering groups similar tracks together. The dendrogram is coloured by genre to assess whether the unsupervised structure aligns with the known labels.
+
 ```{r}
+#| code-summary: "Dendrogram: hierarchical clustering of 60 tracks"
 #| fig-width: 12
 #| fig-height: 6
 #| out-width: "100%"
@@ -83,4 +96,4 @@ ggplot()+geom_segment(data=dd$segments,aes(x=x,y=y,xend=xend,yend=yend),colour="
   labs(title="Hierarchical Clustering: 60-Track Sample",subtitle="Average linkage | Euclidean distance | red = Hard House, cyan = Minimal Tech House",x=NULL,y="Distance")
 ```
 
-The dendrogram provides an unsupervised validation of the supervised classification results. Using average-linkage hierarchical clustering on standardised features, the 60-track sample splits into two clearly distinct branches that align closely with the genre labels. Hard House tracks (red) group together on one side, while Minimal Tech House tracks (cyan) form a separate cluster. The fact that unsupervised clustering recovers the same genre boundary that the supervised classifier learned — without access to any labels — provides strong converging evidence that the distinction between these genres reflects **genuine, measurable differences in audio features**, not merely a labelling convention.
+The dendrogram provides an unsupervised validation of the supervised classification results. Using average-linkage hierarchical clustering on standardised features, the 60-track sample splits into two clearly distinct branches that align closely with the genre labels. Hard House tracks (red) group together on one side, while Minimal Tech House tracks (cyan) form a separate cluster. The fact that unsupervised clustering recovers the same genre boundary that the supervised classifier learned, without access to any labels, provides strong converging evidence that the distinction between these genres reflects genuine, measurable differences in audio features rather than merely a labelling convention.
