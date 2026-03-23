@@ -1,0 +1,282 @@
+[
+  {
+    "objectID": "conclusion.html",
+    "href": "conclusion.html",
+    "title": "Conclusion",
+    "section": "",
+    "text": "Across five weeks of analysis, the computational evidence consistently supports the central claim of this portfolio: Minimal Tech House and Hard House are measurably distinct genres, not just different labels for similar music. The evidence builds cumulatively across multiple independent methods.\nThe track-level feature analysis (Week 8) established that the two genres occupy different regions of Spotify’s feature space, with energy, tempo, and loudness all separating the genres cleanly at the corpus level. The chroma analysis of East Bridge Romance showed that even at the individual track level, Hard House relies on textural contrast around a narrow harmonic core rather than harmonic complexity.\nThe self-similarity analysis (Week 9) revealed that chroma and timbre SSMs capture fundamentally different dimensions of musical structure. A track can repeat the same chords throughout while still evolving texturally — a distinction that would be invisible in a purely harmonic analysis.\nThe tonal centre analysis (Week 10) confirmed through keygram profiling that EDM tracks like Wood maintain a stable key throughout with no modulation, representing a compositional philosophy fundamentally different from traditional tonal music.\nThe temporal analysis (Week 11) showed that rhythmic structure reinforces the genre distinction at the track level. Hard House maintains a rigid, unwavering beat, while Minimal Tech House distributes its rhythmic energy more diffusely.\nFinally, classification and clustering (Week 12) brought everything together. A random forest classifier achieved approximately 99.5% accuracy with 10-fold cross-validation, and a reduced model using only five features performed equally well. Hierarchical clustering recovered the genre boundary without any labels, validating the supervised results with an independent, unsupervised approach."
+  },
+  {
+    "objectID": "conclusion.html#summary-of-findings",
+    "href": "conclusion.html#summary-of-findings",
+    "title": "Conclusion",
+    "section": "",
+    "text": "Across five weeks of analysis, the computational evidence consistently supports the central claim of this portfolio: Minimal Tech House and Hard House are measurably distinct genres, not just different labels for similar music. The evidence builds cumulatively across multiple independent methods.\nThe track-level feature analysis (Week 8) established that the two genres occupy different regions of Spotify’s feature space, with energy, tempo, and loudness all separating the genres cleanly at the corpus level. The chroma analysis of East Bridge Romance showed that even at the individual track level, Hard House relies on textural contrast around a narrow harmonic core rather than harmonic complexity.\nThe self-similarity analysis (Week 9) revealed that chroma and timbre SSMs capture fundamentally different dimensions of musical structure. A track can repeat the same chords throughout while still evolving texturally — a distinction that would be invisible in a purely harmonic analysis.\nThe tonal centre analysis (Week 10) confirmed through keygram profiling that EDM tracks like Wood maintain a stable key throughout with no modulation, representing a compositional philosophy fundamentally different from traditional tonal music.\nThe temporal analysis (Week 11) showed that rhythmic structure reinforces the genre distinction at the track level. Hard House maintains a rigid, unwavering beat, while Minimal Tech House distributes its rhythmic energy more diffusely.\nFinally, classification and clustering (Week 12) brought everything together. A random forest classifier achieved approximately 99.5% accuracy with 10-fold cross-validation, and a reduced model using only five features performed equally well. Hierarchical clustering recovered the genre boundary without any labels, validating the supervised results with an independent, unsupervised approach."
+  },
+  {
+    "objectID": "conclusion.html#key-metrics",
+    "href": "conclusion.html#key-metrics",
+    "title": "Conclusion",
+    "section": "Key Metrics",
+    "text": "Key Metrics\n\n\n\nMetric\nValue\n\n\n\n\nClassifier accuracy (full model, 10 features)\n~99.5%\n\n\nClassifier accuracy (reduced model, 5 features)\n~99.4%\n\n\nTotal tracks analysed\n861\n\n\nIndependent analysis methods\n5\n\n\n\nThe three features that carry the most discriminatory power are Tempo (120–128 vs 138–150 BPM), Loudness (−10 dB vs −6 dB), and Energy (sustained groove vs explosive intensity)."
+  },
+  {
+    "objectID": "conclusion.html#who-could-benefit",
+    "href": "conclusion.html#who-could-benefit",
+    "title": "Conclusion",
+    "section": "Who Could Benefit",
+    "text": "Who Could Benefit\nThese findings are relevant for several audiences. DJs and curators could apply similar feature-based approaches to sort large music libraries, identify tracks that bridge genres, or discover unexpected overlaps between playlists. Music producers gain concrete insight into which measurable properties define genre identity, helping them position their tracks within or across genre boundaries. Researchers in Music Information Retrieval can see how standard Spotify features perform on a focused, two-genre classification task — and, importantly, where those features fall short. Spotify’s features say nothing about arrangement, mixing technique, sound design, or cultural context, all of which are central to how listeners and practitioners actually experience these genres."
+  },
+  {
+    "objectID": "conclusion.html#limitations-future-work",
+    "href": "conclusion.html#limitations-future-work",
+    "title": "Conclusion",
+    "section": "Limitations & Future Work",
+    "text": "Limitations & Future Work\nThis analysis relies entirely on Spotify’s proprietary audio features and on chroma and timbre exports from Sonic Visualiser. Both are approximations. Spotify’s features are black-box estimates that may not correspond to perceptual or musicological categories, and the Sonic Visualiser exports depend on algorithm-specific assumptions about tuning, windowing, and spectral resolution.\nThe corpus itself is limited to two curated playlists, meaning that the results reflect these particular selections rather than the genres as a whole. A track that appears in one playlist but not another might change the analysis. Future work could expand the corpus to include multiple playlists from different curators, incorporate additional analytical methods like structural segmentation or harmonic rhythm analysis, or apply the same methodology to genre pairs where the distinction is less clearcut.\nDespite these limitations, the consistency of results across five independent analysis methods — spanning feature distributions, self-similarity, tonal analysis, temporal analysis, and machine learning — provides strong converging evidence. What the body feels on the dance floor — the difference between swaying and jumping — has a computational signature. The machine can hear it too."
+  },
+  {
+    "objectID": "week11.html",
+    "href": "week11.html",
+    "title": "Week 11: Tempo & Rhythm",
+    "section": "",
+    "text": "Tempo is one of the most immediate perceptual differences between Minimal Tech House and Hard House. This section combines corpus-level analysis (tempo distribution) with track-level analysis (novelty functions and tempograms) to examine how rhythmic pacing and pulse stability differ between the two genres."
+  },
+  {
+    "objectID": "week11.html#temporal-structure-and-rhythmic-organisation",
+    "href": "week11.html#temporal-structure-and-rhythmic-organisation",
+    "title": "Week 11: Tempo & Rhythm",
+    "section": "",
+    "text": "Tempo is one of the most immediate perceptual differences between Minimal Tech House and Hard House. This section combines corpus-level analysis (tempo distribution) with track-level analysis (novelty functions and tempograms) to examine how rhythmic pacing and pulse stability differ between the two genres."
+  },
+  {
+    "objectID": "week11.html#corpus-tempo-distribution",
+    "href": "week11.html#corpus-tempo-distribution",
+    "title": "Week 11: Tempo & Rhythm",
+    "section": "Corpus Tempo Distribution",
+    "text": "Corpus Tempo Distribution\n\n\n\n\n\n\n\n\n\nThe histogram confirms that tempo is one of the strongest differentiators between the two genres. Hard House clusters sharply around 138–150 BPM, reflecting the genre’s aggressive, high-energy character. Minimal Tech House concentrates around 120–128 BPM, which is the classic house tempo range associated with groove-oriented, danceable rhythms. The two distributions barely overlap, with a near-empty zone between 128 and 138 BPM functioning as a natural boundary. This suggests that tempo alone could serve as a reasonably effective genre predictor for these two subgenres."
+  },
+  {
+    "objectID": "week11.html#novelty-functions-first-60-seconds",
+    "href": "week11.html#novelty-functions-first-60-seconds",
+    "title": "Week 11: Tempo & Rhythm",
+    "section": "Novelty Functions: First 60 Seconds",
+    "text": "Novelty Functions: First 60 Seconds\n\n\n\n\n\n\n\n\n\nThe novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. Hard House (It Ain’t Over) shows a pattern of sharp, evenly-spaced peaks with high amplitude — a direct reflection of its relentless, four-on-the-floor kick drum pattern where every beat hits hard. Minimal Tech House (Overflow) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force."
+  },
+  {
+    "objectID": "week11.html#tempograms-hard-house-it-aint-over",
+    "href": "week11.html#tempograms-hard-house-it-aint-over",
+    "title": "Week 11: Tempo & Rhythm",
+    "section": "Tempograms: Hard House (It Ain’t Over)",
+    "text": "Tempograms: Hard House (It Ain’t Over)\n\nACTDFT"
+  },
+  {
+    "objectID": "week11.html#tempograms-minimal-tech-house-overflow",
+    "href": "week11.html#tempograms-minimal-tech-house-overflow",
+    "title": "Week 11: Tempo & Rhythm",
+    "section": "Tempograms: Minimal Tech House (Overflow)",
+    "text": "Tempograms: Minimal Tech House (Overflow)\n\nACTDFT\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInterpretation\nThe tempograms complement the novelty analysis by showing how rhythmic energy is distributed across tempo frequencies over time. The Hard House ACT tempogram displays a strong, consistent horizontal band at the track’s tempo, confirming a metrically rigid, unwavering beat. The DFT tempogram reveals additional energy at integer multiples and sub-multiples of the main tempo — harmonic artifacts that reflect the regularity of the pulse. For Minimal Tech House, the energy distribution is noticeably more diffuse: the rhythmic pulse is present but less forcefully articulated, consistent with a genre that favours subtlety over impact.\nTogether with the self-similarity analysis from Week 9, these tempograms complete the picture: both genres are loop-based and repetitive, but Hard House asserts this through rhythmic rigidity, while Minimal Tech House expresses it through gradual textural continuity."
+  },
+  {
+    "objectID": "week9.html",
+    "href": "week9.html",
+    "title": "Week 9: Self-Similarity",
+    "section": "",
+    "text": "A Self-Similarity Matrix (SSM) compares every moment in a track with every other moment, producing a visual map of structural repetition and contrast. By computing SSMs from both chroma (harmonic) and timbre (textural) features, we can examine whether a track’s form is driven by harmonic development or by changes in sound texture."
+  },
+  {
+    "objectID": "week9.html#self-similarity-matrices",
+    "href": "week9.html#self-similarity-matrices",
+    "title": "Week 9: Self-Similarity",
+    "section": "",
+    "text": "A Self-Similarity Matrix (SSM) compares every moment in a track with every other moment, producing a visual map of structural repetition and contrast. By computing SSMs from both chroma (harmonic) and timbre (textural) features, we can examine whether a track’s form is driven by harmonic development or by changes in sound texture."
+  },
+  {
+    "objectID": "week9.html#harmonic-structure-wood",
+    "href": "week9.html#harmonic-structure-wood",
+    "title": "Week 9: Self-Similarity",
+    "section": "Harmonic Structure: Wood",
+    "text": "Harmonic Structure: Wood\n\n\n\nThe chroma-based self-similarity matrix of Wood displays a clear block-diagonal structure, with well-defined rectangular regions along the main diagonal. Each block represents a section of the track where harmonic content remains internally consistent, and the sharp transitions between blocks indicate structural boundaries. This confirms that Wood is composed of discrete, recurring harmonic zones rather than continuous development — typical of loop-based electronic music where form emerges through the layering and removal of elements over a repeating harmonic foundation."
+  },
+  {
+    "objectID": "week9.html#chroma-vs-timbre-bloed-zweet-en-tranen",
+    "href": "week9.html#chroma-vs-timbre-bloed-zweet-en-tranen",
+    "title": "Week 9: Self-Similarity",
+    "section": "Chroma vs Timbre: Bloed, Zweet en Tranen",
+    "text": "Chroma vs Timbre: Bloed, Zweet en Tranen\n\nChromaTimbre\n\n\n\n\n\n\n\n\n\n\n\n\n\nComparing the two SSMs reveals that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM shows clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular — even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. This demonstrates that a track can be harmonically stable while remaining texturally dynamic, and that chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture."
+  },
+  {
+    "objectID": "corpus.html",
+    "href": "corpus.html",
+    "title": "Corpus",
+    "section": "",
+    "text": "The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists are embedded below for listening reference.\n\n\n536 tracks — hypnotic basslines, groove-driven repetition\n\n\n\n\n\n325 tracks — aggressive kicks, maximal compression"
+  },
+  {
+    "objectID": "corpus.html#the-two-playlists",
+    "href": "corpus.html#the-two-playlists",
+    "title": "Corpus",
+    "section": "",
+    "text": "The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists are embedded below for listening reference.\n\n\n536 tracks — hypnotic basslines, groove-driven repetition\n\n\n\n\n\n325 tracks — aggressive kicks, maximal compression"
+  },
+  {
+    "objectID": "corpus.html#full-corpus-explorer",
+    "href": "corpus.html#full-corpus-explorer",
+    "title": "Corpus",
+    "section": "Full Corpus Explorer",
+    "text": "Full Corpus Explorer\nThe table below contains all 861 tracks with their Spotify audio features. Use the column filters to search by genre, artist, or feature range."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "About",
+    "section": "",
+    "text": "This project investigates whether the stylistic contrast between Minimal Tech House and Hard House — two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum — can be identified and quantified through computational audio features.\nUsing Spotify’s track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like groovy, hypnotic, aggressive, and relentless into measurable musical data.\n\n\n\n\n\n\nNoteCentral question\n\n\n\nCan the stylistic gap between two EDM subgenres be confirmed through computational evidence — and if so, which features carry the distinction?"
+  },
+  {
+    "objectID": "index.html#can-machines-hear-the-difference-between-groove-and-aggression",
+    "href": "index.html#can-machines-hear-the-difference-between-groove-and-aggression",
+    "title": "About",
+    "section": "",
+    "text": "This project investigates whether the stylistic contrast between Minimal Tech House and Hard House — two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum — can be identified and quantified through computational audio features.\nUsing Spotify’s track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like groovy, hypnotic, aggressive, and relentless into measurable musical data.\n\n\n\n\n\n\nNoteCentral question\n\n\n\nCan the stylistic gap between two EDM subgenres be confirmed through computational evidence — and if so, which features carry the distinction?"
+  },
+  {
+    "objectID": "index.html#the-two-playlists",
+    "href": "index.html#the-two-playlists",
+    "title": "About",
+    "section": "The Two Playlists",
+    "text": "The Two Playlists\nMinimal Tech House\nGroovy Minimal House contains 536 tracks from the intersection of Detroit techno and Chicago house. The genre is defined by restraint: stripped-back percussion, hypnotic basslines, and gradual textural development. Tempos typically sit between 120 and 128 BPM, and energy is sustained but never aggressive. I selected this playlist because it represents the groovy, hypnotic side of electronic music that I personally enjoy as a DJ and listener.\nHard House\nClub Heartbroken contains 325 tracks rooted in the UK rave scene. This genre pushes tempo, impact, and emotional intensity to the extreme: 138–150 BPM, aggressive kicks, and maximally compressed masters. I chose this playlist because it represents the opposite end of the EDM spectrum — maximum intensity instead of minimal restraint."
+  },
+  {
+    "objectID": "index.html#creative-process",
+    "href": "index.html#creative-process",
+    "title": "About",
+    "section": "Creative Process",
+    "text": "Creative Process\nAs a DJ who plays both minimal and hard sets, I experience the contrast between these genres physically. Minimal Tech House makes you sway — it is music for sustained, hypnotic movement. Hard House makes you jump — it demands immediate, explosive energy. This project tests whether that embodied experience is computationally verifiable. Every analysis in this portfolio is designed to ask the same question: can the machine hear what the body already knows?"
+  },
+  {
+    "objectID": "index.html#assumptions-limitations",
+    "href": "index.html#assumptions-limitations",
+    "title": "About",
+    "section": "Assumptions & Limitations",
+    "text": "Assumptions & Limitations\nSeveral assumptions underlie this analysis. Spotify’s audio features are treated as ground truth, but they are black-box estimates — we do not know the exact algorithms behind features like “energy” or “danceability”, and they may not capture what musicians or listeners mean by those terms. Both playlists were curated by individual users and reflect personal taste rather than a systematic sample of either genre. The corpus is also imbalanced (536 vs 325 tracks), which could bias some analyses; the classifier uses stratified cross-validation to mitigate this. Finally, chroma and timbre analyses rely on Sonic Visualiser exports, which use specific algorithms (NNLS Chroma, libextract MFCCs) with their own assumptions about tuning and spectral resolution.\nThese limitations mean that the conclusions drawn here are indicative rather than definitive. They show what Spotify’s feature space can and cannot capture about these genres, and the confidence in final conclusions is inherently limited by the accuracy of the assumptions described above."
+  },
+  {
+    "objectID": "index.html#genre-comparison-at-a-glance",
+    "href": "index.html#genre-comparison-at-a-glance",
+    "title": "About",
+    "section": "Genre Comparison at a Glance",
+    "text": "Genre Comparison at a Glance"
+  },
+  {
+    "objectID": "week8.html",
+    "href": "week8.html",
+    "title": "Week 8: Track-Level Features",
+    "section": "",
+    "text": "This section examines whether the perceived “vibe” of each genre translates into measurable numerical differences. By comparing energy, tempo, loudness, and chroma features across the full corpus, we test whether Spotify’s audio features can capture the contrast between groove-oriented restraint and high-energy aggression."
+  },
+  {
+    "objectID": "week8.html#track-level-feature-analysis",
+    "href": "week8.html#track-level-feature-analysis",
+    "title": "Week 8: Track-Level Features",
+    "section": "",
+    "text": "This section examines whether the perceived “vibe” of each genre translates into measurable numerical differences. By comparing energy, tempo, loudness, and chroma features across the full corpus, we test whether Spotify’s audio features can capture the contrast between groove-oriented restraint and high-energy aggression."
+  },
+  {
+    "objectID": "week8.html#energy-vs-tempo-full-corpus",
+    "href": "week8.html#energy-vs-tempo-full-corpus",
+    "title": "Week 8: Track-Level Features",
+    "section": "Energy vs Tempo: Full Corpus",
+    "text": "Energy vs Tempo: Full Corpus\n\n\n\n\n\n\n\n\n\nThe scatter plot reveals a clear spatial separation between the two genres. Hard House occupies the top-right quadrant, clustering around 138–150 BPM with energy values consistently above 0.8. Minimal Tech House sits in the bottom-left, concentrated between 120–128 BPM with more moderate energy levels. This separation confirms that the perceived stylistic contrast is reflected in Spotify’s numerical feature space. The overlap region between the two clusters is small but not empty, suggesting that some tracks sit on the genre boundary — which is expected, since genres are cultural constructs with fluid edges rather than rigid categories."
+  },
+  {
+    "objectID": "week8.html#energy-tempo-loudness-distributions",
+    "href": "week8.html#energy-tempo-loudness-distributions",
+    "title": "Week 8: Track-Level Features",
+    "section": "Energy, Tempo & Loudness Distributions",
+    "text": "Energy, Tempo & Loudness Distributions\n\n\n\n\n\n\n\n\n\nAll three density plots show distinct peaks per genre. Tempo provides the cleanest separation: the two distributions have almost no overlap between 128 and 138 BPM, creating a natural decision boundary. Energy separates well too, though Minimal Tech House shows a wider spread — some tracks push toward higher energy while remaining structurally minimal. Loudness reveals a fundamental difference in mastering philosophy: Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice."
+  },
+  {
+    "objectID": "week8.html#chroma-features-east-bridge-romance",
+    "href": "week8.html#chroma-features-east-bridge-romance",
+    "title": "Week 8: Track-Level Features",
+    "section": "Chroma Features: East Bridge Romance",
+    "text": "Chroma Features: East Bridge Romance\n\n\n\nThe chromagram of East Bridge Romance shows repeated horizontal bands concentrated around a small number of pitch classes, revealing a loop-based harmonic structure typical of Hard House. Brighter areas align with the track’s drops, where multiple pitch classes activate simultaneously as layered synths and bass enter. Thinner, darker sections correspond to breakdowns where the arrangement strips back to percussion and atmosphere. This pattern demonstrates that formal structure in Hard House emerges not from harmonic development or modulation, but from textural contrast — the alternation between sparse and dense moments around a stable harmonic core."
+  },
+  {
+    "objectID": "week10.html",
+    "href": "week10.html",
+    "title": "Week 10: Tonal Centre",
+    "section": "",
+    "text": "This section explores tonal structure through key estimation. A global key profile shows which pitch classes dominate across an entire track, while a keygram tracks how key estimates change over time. These methods are especially informative for EDM, where harmonic palettes are deliberately narrow and heavily reinforced."
+  },
+  {
+    "objectID": "week10.html#tonal-centre-analysis",
+    "href": "week10.html#tonal-centre-analysis",
+    "title": "Week 10: Tonal Centre",
+    "section": "",
+    "text": "This section explores tonal structure through key estimation. A global key profile shows which pitch classes dominate across an entire track, while a keygram tracks how key estimates change over time. These methods are especially informative for EDM, where harmonic palettes are deliberately narrow and heavily reinforced."
+  },
+  {
+    "objectID": "week10.html#global-key-profile-wood",
+    "href": "week10.html#global-key-profile-wood",
+    "title": "Week 10: Tonal Centre",
+    "section": "Global Key Profile: Wood",
+    "text": "Global Key Profile: Wood\n\n\n\n\n\n\n\n\n\nThe bar chart shows the average intensity of each pitch class across the entire duration of Wood. A small number of pitch classes dominate clearly, while others are nearly absent. In EDM, where harmonic material is deliberately narrow and heavily reinforced through repetition, this profile acts as a compact fingerprint of tonal emphasis. The pronounced peaks connect directly to the loop-based patterns visible in the Week 9 chroma analysis — the same few notes that form the harmonic loop are the ones that accumulate the highest average intensity over time."
+  },
+  {
+    "objectID": "week10.html#keygram-wood",
+    "href": "week10.html#keygram-wood",
+    "title": "Week 10: Tonal Centre",
+    "section": "Keygram: Wood",
+    "text": "Keygram: Wood\n\n\n\n\n\n\n\n\n\nThe keygram matches the chroma content of each time window against all 24 major and minor key templates using the Krumhansl-Kessler profiles. Darker horizontal bands indicate keys that consistently match well throughout the track. For Wood, one or two keys dominate across the entire duration with no visible modulation — the dark bands remain stable from beginning to end. This is consistent with the block structure observed in the Week 9 SSM and confirms that compositional form in this genre relies on harmonic repetition rather than harmonic development. This contrasts fundamentally with traditional tonal music, where key changes serve as a primary structural device to create tension and resolution."
+  },
+  {
+    "objectID": "week10.html#corpus-data-explorer",
+    "href": "week10.html#corpus-data-explorer",
+    "title": "Week 10: Tonal Centre",
+    "section": "Corpus Data Explorer",
+    "text": "Corpus Data Explorer"
+  },
+  {
+    "objectID": "week12.html",
+    "href": "week12.html",
+    "title": "Week 12: Classification & Clustering",
+    "section": "",
+    "text": "This section tests whether Spotify’s audio features can reliably distinguish Minimal Tech House from Hard House using supervised classification (random forest) and unsupervised clustering (hierarchical). Together, these methods provide both a performance benchmark and an independent validation of the genre distinction."
+  },
+  {
+    "objectID": "week12.html#classification-and-clustering",
+    "href": "week12.html#classification-and-clustering",
+    "title": "Week 12: Classification & Clustering",
+    "section": "",
+    "text": "This section tests whether Spotify’s audio features can reliably distinguish Minimal Tech House from Hard House using supervised classification (random forest) and unsupervised clustering (hierarchical). Together, these methods provide both a performance benchmark and an independent validation of the genre distinction."
+  },
+  {
+    "objectID": "week12.html#confusion-matrix-random-forest-10-fold-cv",
+    "href": "week12.html#confusion-matrix-random-forest-10-fold-cv",
+    "title": "Week 12: Classification & Clustering",
+    "section": "Confusion Matrix: Random Forest (10-fold CV)",
+    "text": "Confusion Matrix: Random Forest (10-fold CV)\n\n\n\n\n\n\n\n\n\nThe random forest classifier achieves a 10-fold cross-validated accuracy of 0.995, confirming that Minimal Tech House and Hard House are computationally distinguishable with high reliability. The confusion matrix shows that nearly all tracks are correctly classified, with only a handful of misclassifications. These errors likely correspond to boundary tracks that blend characteristics of both genres — a finding that is consistent with the small overlap region visible in the Week 8 scatter plot."
+  },
+  {
+    "objectID": "week12.html#feature-importance",
+    "href": "week12.html#feature-importance",
+    "title": "Week 12: Classification & Clustering",
+    "section": "Feature Importance",
+    "text": "Feature Importance\n\n\n\n\n\n\n\n\n\nThe feature importance ranking reveals which audio features the classifier relies on most heavily. Tempo dominates, which aligns with the near-complete separation visible in the Week 11 histogram. Danceability, Energy, and Loudness follow closely — all features that directly relate to the physical experience of each genre. Features like Speechiness and Liveness contribute almost nothing to the classification, which makes sense for two purely electronic, instrumental genres where neither speech nor live performance characteristics are relevant."
+  },
+  {
+    "objectID": "week12.html#reduced-model-top-5-features",
+    "href": "week12.html#reduced-model-top-5-features",
+    "title": "Week 12: Classification & Clustering",
+    "section": "Reduced Model: Top 5 Features",
+    "text": "Reduced Model: Top 5 Features\n\n\n\n\n\n\n\n\n\nThe reduced model, using only Tempo, Loudness, Energy, Danceability, and Valence, achieves an accuracy of 0.994 compared to 0.995 with all ten features. The negligible difference confirms that the genre distinction is primarily encoded in a small set of features tied to tempo, loudness, and energy. The five removed features (Speechiness, Liveness, Instrumentalness, Acousticness, Duration) add almost no discriminatory power for this particular genre pair."
+  },
+  {
+    "objectID": "week12.html#hierarchical-clustering-dendrogram",
+    "href": "week12.html#hierarchical-clustering-dendrogram",
+    "title": "Week 12: Classification & Clustering",
+    "section": "Hierarchical Clustering: Dendrogram",
+    "text": "Hierarchical Clustering: Dendrogram\n\n\n\n\n\n\n\n\n\nThe dendrogram provides an unsupervised validation of the supervised classification results. Using average-linkage hierarchical clustering on standardised features, the 60-track sample splits into two clearly distinct branches that align closely with the genre labels. Hard House tracks (red) group together on one side, while Minimal Tech House tracks (cyan) form a separate cluster. The fact that unsupervised clustering recovers the same genre boundary that the supervised classifier learned — without access to any labels — provides strong converging evidence that the distinction between these genres reflects genuine, measurable differences in audio features, not merely a labelling convention."
+  }
+]

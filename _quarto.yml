@@ -1,0 +1,55 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - corpus.qmd
+    - week8.qmd
+    - week9.qmd
+    - week10.qmd
+    - week11.qmd
+    - week12.qmd
+    - conclusion.qmd
+
+website:
+  title: "Frequency Spectrum"
+  navbar:
+    background: "#111118"
+    foreground: "#d0d4dc"
+    left:
+      - href: index.qmd
+        text: About
+      - href: corpus.qmd
+        text: Corpus
+      - href: week8.qmd
+        text: Week 8
+      - href: week9.qmd
+        text: Week 9
+      - href: week10.qmd
+        text: Week 10
+      - href: week11.qmd
+        text: Week 11
+      - href: week12.qmd
+        text: Week 12
+      - href: conclusion.qmd
+        text: Conclusion
+    right:
+      - icon: github
+        href: https://github.com/abelvestering/Computational_Musicology/
+
+format:
+  html:
+    theme: cyborg
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    toc-title: "On this page"
+    css: style.css
+    smooth-scroll: true
+    fontsize: "1rem"
+    mainfont: "Source Sans 3"
+
+execute:
+  echo: false
+  warning: false
+  message: false

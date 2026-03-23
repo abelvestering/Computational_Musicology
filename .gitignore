@@ -1,0 +1,11 @@
+*.dmg
+*.mp3
+*.pdf
+*.RData
+*.Rhistory
+.DS_Store
+.quarto/
+old_files/
+_freeze/
+*.png
+!docs/**/*.png

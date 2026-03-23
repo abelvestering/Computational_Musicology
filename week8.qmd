@@ -1,0 +1,48 @@
+---
+title: "Week 8: Track-Level Features"
+---
+
+```{r setup}
+#| include: false
+source("setup.R")
+```
+
+## Track-Level Feature Analysis
+
+This section examines whether the perceived "vibe" of each genre translates into measurable numerical differences. By comparing energy, tempo, loudness, and chroma features across the full corpus, we test whether Spotify's audio features can capture the contrast between groove-oriented restraint and high-energy aggression.
+
+## Energy vs Tempo: Full Corpus
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| out-width: "100%"
+ggplot(corpus, aes(x=Tempo,y=Energy,colour=Genre)) + geom_point(alpha=0.5,size=1.8) +
+  scale_colour_manual(values=pal) + theme_freq(13) +
+  labs(title="Minimal Tech House vs Hard House", subtitle="Energy vs Tempo across 861 tracks",
+    x="Tempo (BPM)", y="Energy", colour=NULL)
+```
+
+The scatter plot reveals a clear spatial separation between the two genres. **Hard House** occupies the top-right quadrant, clustering around 138–150 BPM with energy values consistently above 0.8. **Minimal Tech House** sits in the bottom-left, concentrated between 120–128 BPM with more moderate energy levels. This separation confirms that the perceived stylistic contrast is reflected in Spotify's numerical feature space. The overlap region between the two clusters is small but not empty, suggesting that some tracks sit on the genre boundary — which is expected, since genres are cultural constructs with fluid edges rather than rigid categories.
+
+## Energy, Tempo & Loudness Distributions
+
+```{r}
+#| fig-width: 14
+#| fig-height: 5
+#| out-width: "100%"
+p1<-ggplot(corpus,aes(x=Tempo,fill=Genre))+geom_density(alpha=0.6)+scale_fill_manual(values=pal)+theme_freq(11)+labs(title="Tempo",x="BPM",y="Density",fill=NULL)
+p2<-ggplot(corpus,aes(x=Energy,fill=Genre))+geom_density(alpha=0.6)+scale_fill_manual(values=pal)+theme_freq(11)+labs(title="Energy",x="Energy (0-1)",y="Density",fill=NULL)
+p3<-ggplot(corpus,aes(x=Loudness,fill=Genre))+geom_density(alpha=0.6)+scale_fill_manual(values=pal)+theme_freq(11)+labs(title="Loudness",x="Loudness (dB)",y="Density",fill=NULL)
+gridExtra::grid.arrange(p1,p2,p3,ncol=3)
+```
+
+All three density plots show distinct peaks per genre. **Tempo** provides the cleanest separation: the two distributions have almost no overlap between 128 and 138 BPM, creating a natural decision boundary. **Energy** separates well too, though Minimal Tech House shows a wider spread — some tracks push toward higher energy while remaining structurally minimal. **Loudness** reveals a fundamental difference in mastering philosophy: Hard House peaks around −6 dB (heavily compressed for maximum impact), while Minimal Tech House averages around −10 dB, retaining more dynamic range to create space for the groove to breathe. This 4 dB gap is perceptually significant and reflects a deliberate production choice.
+
+## Chroma Features: East Bridge Romance
+
+<div style="text-align:center;">
+  <img src="Image.png" style="max-width:700px;width:100%;height:auto;">
+</div>
+
+The chromagram of *East Bridge Romance* shows repeated horizontal bands concentrated around a small number of pitch classes, revealing a loop-based harmonic structure typical of Hard House. Brighter areas align with the track's drops, where multiple pitch classes activate simultaneously as layered synths and bass enter. Thinner, darker sections correspond to breakdowns where the arrangement strips back to percussion and atmosphere. This pattern demonstrates that formal structure in Hard House emerges not from harmonic development or modulation, but from **textural contrast** — the alternation between sparse and dense moments around a stable harmonic core.

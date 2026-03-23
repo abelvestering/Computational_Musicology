@@ -1,0 +1,96 @@
+---
+title: "Week 11: Tempo & Rhythm"
+---
+
+```{r setup}
+#| include: false
+source("setup.R")
+```
+
+## Temporal Structure and Rhythmic Organisation
+
+Tempo is one of the most immediate perceptual differences between Minimal Tech House and Hard House. This section combines corpus-level analysis (tempo distribution) with track-level analysis (novelty functions and tempograms) to examine how rhythmic pacing and pulse stability differ between the two genres.
+
+## Corpus Tempo Distribution
+
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+#| out-width: "100%"
+ggplot(corpus,aes(x=Tempo,fill=Genre))+geom_histogram(binwidth=2,alpha=0.7,position="identity")+
+  scale_fill_manual(values=pal)+theme_freq(12)+
+  labs(title="Tempo Distribution Across the Corpus",subtitle="Each bar = 2 BPM | 861 tracks",x="Tempo (BPM)",y="Number of Tracks",fill=NULL)
+```
+
+The histogram confirms that tempo is one of the strongest differentiators between the two genres. **Hard House** clusters sharply around 138–150 BPM, reflecting the genre's aggressive, high-energy character. **Minimal Tech House** concentrates around 120–128 BPM, which is the classic house tempo range associated with groove-oriented, danceable rhythms. The two distributions barely overlap, with a near-empty zone between 128 and 138 BPM functioning as a natural boundary. This suggests that tempo alone could serve as a reasonably effective genre predictor for these two subgenres.
+
+## Novelty Functions: First 60 Seconds
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| out-width: "100%"
+hard_nov<-read_csv("mytrack-novelty.csv",col_names=c("TIME","VALUE"),show_col_types=F)|>mutate(Genre="Hard House")
+min_nov<-read_csv("minimal-novelty.csv",col_names=c("TIME","VALUE"),show_col_types=F)|>mutate(Genre="Minimal Tech House")
+bind_rows(hard_nov,min_nov)|>ggplot(aes(x=TIME,y=VALUE,colour=Genre))+geom_line(alpha=0.8,linewidth=0.4)+
+  scale_colour_manual(values=pal)+facet_wrap(~Genre,ncol=1,scales="free_y")+xlim(0,60)+
+  theme_freq(11)+labs(title="Novelty Functions: First 60 Seconds",subtitle="Onset strength over time",x="Time (s)",y="Novelty",colour=NULL)+theme(legend.position="none")
+```
+
+The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. **Hard House** (*It Ain't Over*) shows a pattern of sharp, evenly-spaced peaks with high amplitude — a direct reflection of its relentless, four-on-the-floor kick drum pattern where every beat hits hard. **Minimal Tech House** (*Overflow*) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.
+
+## Tempograms: Hard House (It Ain't Over)
+
+::: {.panel-tabset}
+
+### ACT
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+#| out-width: "100%"
+read_csv("mytrack-act.csv",show_col_types=F)|>pivot_longer(-TIME,names_to="tempo")|>mutate(tempo=as.numeric(tempo))|>
+  ggplot(aes(x=TIME,y=tempo,fill=value))+geom_raster()+scale_y_continuous(transform=c("reciprocal","reverse"),breaks=seq(50,350,50))+
+  scale_fill_viridis_c(guide="none")+theme_freq(11)+theme(panel.grid=element_blank())+labs(title="ACT Tempogram: Hard House",x="Time (s)",y="Tempo (BPM)")
+```
+
+### DFT
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+#| out-width: "100%"
+read_csv("mytrack-dft.csv",show_col_types=F)|>pivot_longer(-TIME,names_to="tempo")|>mutate(tempo=as.numeric(tempo))|>
+  ggplot(aes(x=TIME,y=tempo,fill=value))+geom_raster()+scale_fill_viridis_c(guide="none")+
+  theme_freq(11)+theme(panel.grid=element_blank())+labs(title="DFT Tempogram: Hard House",x="Time (s)",y="Tempo (BPM)")
+```
+:::
+
+## Tempograms: Minimal Tech House (Overflow)
+
+::: {.panel-tabset}
+
+### ACT
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+#| out-width: "100%"
+read_csv("minimal-act.csv",show_col_types=F)|>pivot_longer(-TIME,names_to="tempo")|>mutate(tempo=as.numeric(tempo))|>
+  ggplot(aes(x=TIME,y=tempo,fill=value))+geom_raster()+scale_y_continuous(transform=c("reciprocal","reverse"),breaks=seq(50,350,50))+
+  scale_fill_viridis_c(guide="none")+theme_freq(11)+theme(panel.grid=element_blank())+labs(title="ACT Tempogram: Minimal Tech House",x="Time (s)",y="Tempo (BPM)")
+```
+
+### DFT
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+#| out-width: "100%"
+read_csv("minimal-dft.csv",show_col_types=F)|>pivot_longer(-TIME,names_to="tempo")|>mutate(tempo=as.numeric(tempo))|>
+  ggplot(aes(x=TIME,y=tempo,fill=value))+geom_raster()+scale_fill_viridis_c(guide="none")+
+  theme_freq(11)+theme(panel.grid=element_blank())+labs(title="DFT Tempogram: Minimal Tech House",x="Time (s)",y="Tempo (BPM)")
+```
+:::
+
+### Interpretation
+
+The tempograms complement the novelty analysis by showing how rhythmic energy is distributed across tempo frequencies over time. The Hard House ACT tempogram displays a **strong, consistent horizontal band** at the track's tempo, confirming a metrically rigid, unwavering beat. The DFT tempogram reveals additional energy at integer multiples and sub-multiples of the main tempo — harmonic artifacts that reflect the regularity of the pulse. For Minimal Tech House, the energy distribution is noticeably **more diffuse**: the rhythmic pulse is present but less forcefully articulated, consistent with a genre that favours subtlety over impact.
+
+Together with the self-similarity analysis from Week 9, these tempograms complete the picture: both genres are loop-based and repetitive, but Hard House asserts this through rhythmic rigidity, while Minimal Tech House expresses it through gradual textural continuity.

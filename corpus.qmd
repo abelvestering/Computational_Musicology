@@ -1,0 +1,35 @@
+---
+title: "Corpus"
+---
+
+```{r setup}
+#| include: false
+source("setup.R")
+```
+
+## The Two Playlists
+
+The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists are embedded below for listening reference.
+
+### Groovy Minimal House
+
+<span class="genre-tag minimal">536 tracks — hypnotic basslines, groove-driven repetition</span>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2Alz8zsZFJLzDthh37proC?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+### Club Heartbroken
+
+<span class="genre-tag hard">325 tracks — aggressive kicks, maximal compression</span>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5uOkatltA5XM6mN4HHeIT6?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+## Full Corpus Explorer
+
+The table below contains all 861 tracks with their Spotify audio features. Use the column filters to search by genre, artist, or feature range.
+
+```{r}
+corpus |> select(Genre,`Track Name`,`Artist Name(s)`,Tempo,Energy,Danceability,Valence,Loudness,Popularity) |>
+  mutate(Tempo=round(Tempo,1),Energy=round(Energy,3),Danceability=round(Danceability,3),Valence=round(Valence,3),Loudness=round(Loudness,1)) |>
+  datatable(filter="top",options=list(pageLength=15,scrollX=T,dom='frtip',columnDefs=list(list(className='dt-center',targets=3:8))),
+    class="table table-striped table-hover table-sm",rownames=F)
+```
