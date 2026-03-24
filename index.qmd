@@ -1,12 +1,24 @@
 ---
 title: "Groove vs Aggression"
-subtitle: "A Computational Musicology Portfolio by Abel Vestering"
+subtitle: "A Computational Musicology Portfolio"
+author:
+  - name: "Abel Vestering"
+    affiliation: "Universiteit van Amsterdam"
+date: "29 March 2026"
+abstract: |
+  Computational Musicology · 2025/26 Semester 2, Period 1
+  Course code: 115215146Y · Instructor: John Ashley Burgoyne
 ---
 
 ```{r setup}
 #| include: false
 source("setup.R")
 ```
+
+<div style="font-size:0.9rem; color:#7a8090; margin-top:-1rem; margin-bottom:2rem;">
+Computational Musicology (115215146Y) · Universiteit van Amsterdam<br>
+Instructor: John Ashley Burgoyne
+</div>
 
 ## Can Machines Hear the Difference Between Groove and Aggression?
 
@@ -42,6 +54,7 @@ These limitations mean that the conclusions drawn here are indicative rather tha
 ## Genre Comparison at a Glance
 
 ```{r}
+#| echo: false
 summary_stats <- corpus |> group_by(Genre) |>
   summarise(Tracks=n(), `Avg BPM`=round(mean(Tempo,na.rm=T),1), `Avg Energy`=round(mean(Energy,na.rm=T),3),
     `Avg Danceability`=round(mean(Danceability,na.rm=T),3), `Avg Valence`=round(mean(Valence,na.rm=T),3),

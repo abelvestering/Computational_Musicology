@@ -6,6 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Abel Vestering">
+<meta name="dcterms.date" content="2026-03-29">
 
 <title>Groove vs Aggression – Groovy House vs Hard House</title>
 <style>
@@ -208,24 +210,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Groove vs Aggression</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
-<p class="subtitle lead">A Computational Musicology Portfolio by Abel Vestering</p>
+<div class="quarto-title-block"><div><h1 class="title">Groove vs Aggression</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">A Computational Musicology Portfolio</p>
 </div>
 
 
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Abel Vestering </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Universiteit van Amsterdam
+          </p>
+      </div>
+  </div>
 
 <div class="quarto-title-meta">
 
-    
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 29, 2026</p>
+    </div>
+  </div>
   
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    <p>Computational Musicology · 2025/26 Semester 2, Period 1 Course code: 115215146Y · Instructor: John Ashley Burgoyne</p>
+  </div>
+</div>
 
 
 </header>
 
 
+<div style="font-size:0.9rem; color:#7a8090; margin-top:-1rem; margin-bottom:2rem;">
+<p>Computational Musicology (115215146Y) · Universiteit van Amsterdam<br> Instructor: John Ashley Burgoyne</p>
+</div>
 <section id="can-machines-hear-the-difference-between-groove-and-aggression" class="level2">
 <h2 class="anchored" data-anchor-id="can-machines-hear-the-difference-between-groove-and-aggression">Can Machines Hear the Difference Between Groove and Aggression?</h2>
 <p>This project investigates whether the stylistic contrast between Minimal Tech House and Hard House, two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum, can be identified and quantified through computational audio features.</p>
@@ -263,18 +293,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="genre-comparison-at-a-glance" class="level2">
 <h2 class="anchored" data-anchor-id="genre-comparison-at-a-glance">Genre Comparison at a Glance</h2>
 <div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> corpus <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Genre) <span class="sc">|&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Tracks=</span><span class="fu">n</span>(), <span class="st">`</span><span class="at">Avg BPM</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Tempo,<span class="at">na.rm=</span>T),<span class="dv">1</span>), <span class="st">`</span><span class="at">Avg Energy</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Energy,<span class="at">na.rm=</span>T),<span class="dv">3</span>),</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Danceability</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Danceability,<span class="at">na.rm=</span>T),<span class="dv">3</span>), <span class="st">`</span><span class="at">Avg Valence</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Valence,<span class="at">na.rm=</span>T),<span class="dv">3</span>),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Loudness (dB)</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Loudness,<span class="at">na.rm=</span>T),<span class="dv">1</span>))</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(summary_stats, <span class="at">options=</span><span class="fu">list</span>(<span class="at">dom=</span><span class="st">'t'</span>,<span class="at">ordering=</span>F, <span class="at">columnDefs=</span><span class="fu">list</span>(<span class="fu">list</span>(<span class="at">className=</span><span class="st">'dt-center'</span>,<span class="at">targets=</span><span class="st">'_all'</span>))),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">rownames=</span>F, <span class="at">class=</span><span class="st">"table table-striped table-hover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-8d0dc22efa3cd24c8b84" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-8d0dc22efa3cd24c8b84">{"x":{"filter":"none","vertical":false,"data":[["Hard House","Minimal Tech House"],[325,536],[141.6,125.5],[0.9429999999999999,0.716],[0.661,0.799],[0.584,0.499],[-6.4,-10.4]],"container":"<table class=\"table table-striped table-hover\">\n  <thead>\n    <tr>\n      <th>Genre<\/th>\n      <th>Tracks<\/th>\n      <th>Avg BPM<\/th>\n      <th>Avg Energy<\/th>\n      <th>Avg Danceability<\/th>\n      <th>Avg Valence<\/th>\n      <th>Avg Loudness (dB)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","ordering":false,"columnDefs":[{"className":"dt-center","targets":"_all"},{"name":"Genre","targets":0},{"name":"Tracks","targets":1},{"name":"Avg BPM","targets":2},{"name":"Avg Energy","targets":3},{"name":"Avg Danceability","targets":4},{"name":"Avg Valence","targets":5},{"name":"Avg Loudness (dB)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ea67be8967498cac659d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ea67be8967498cac659d">{"x":{"filter":"none","vertical":false,"data":[["Hard House","Minimal Tech House"],[325,536],[141.6,125.5],[0.9429999999999999,0.716],[0.661,0.799],[0.584,0.499],[-6.4,-10.4]],"container":"<table class=\"table table-striped table-hover\">\n  <thead>\n    <tr>\n      <th>Genre<\/th>\n      <th>Tracks<\/th>\n      <th>Avg BPM<\/th>\n      <th>Avg Energy<\/th>\n      <th>Avg Danceability<\/th>\n      <th>Avg Valence<\/th>\n      <th>Avg Loudness (dB)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","ordering":false,"columnDefs":[{"className":"dt-center","targets":"_all"},{"name":"Genre","targets":0},{"name":"Tracks","targets":1},{"name":"Avg BPM","targets":2},{"name":"Avg Energy","targets":3},{"name":"Avg Danceability","targets":4},{"name":"Avg Valence","targets":5},{"name":"Avg Loudness (dB)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
@@ -735,57 +756,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Groove vs Aggression"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A Computational Musicology Portfolio by Abel Vestering"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Can Machines Hear the Difference Between Groove and Aggression?</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>This project investigates whether the stylistic contrast between Minimal Tech House and Hard House, two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum, can be identified and quantified through computational audio features.</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>Using Spotify's track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like *groovy*, *hypnotic*, *aggressive*, and *relentless* into measurable musical data.</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Central question</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>Can the stylistic gap between two EDM subgenres be confirmed through computational evidence, and if so, which features carry the distinction?</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Two Playlists</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">"genre-tag minimal"</span><span class="dt">&gt;</span>Minimal Tech House<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>**Groovy Minimal House** contains 536 tracks from the intersection of Detroit techno and Chicago house. The genre is defined by *restraint*: stripped-back percussion, hypnotic basslines, and gradual textural development. Tempos typically sit between 120 and 128 BPM, and energy is sustained but never aggressive. I selected this playlist because it represents the groovy, hypnotic side of electronic music that I personally enjoy as a DJ and listener.</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">"genre-tag hard"</span><span class="dt">&gt;</span>Hard House<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>**Club Heartbroken** contains 325 tracks rooted in the UK rave scene. This genre pushes tempo, impact, and emotional intensity to the extreme: 138–150 BPM, aggressive kicks, and maximally compressed masters. I chose this playlist because it sits at the opposite end of the EDM spectrum, favouring maximum intensity over minimal restraint.</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creative Process</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>As a DJ who plays both minimal and hard sets, I experience the contrast between these genres physically. Minimal Tech House makes you *sway*; it is music for sustained, hypnotic movement. Hard House makes you *jump*; it demands immediate, explosive energy. This project tests whether that embodied experience is computationally verifiable. Every analysis in this portfolio asks the same question: can the machine hear what the body already knows?</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Assumptions &amp; Limitations</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>Several assumptions underlie this analysis. Spotify's audio features are treated as ground truth, but they are black-box estimates. We do not know the exact algorithms behind features like "energy" or "danceability", and they may not capture what musicians or listeners mean by those terms. Both playlists were curated by individual users and reflect personal taste rather than a systematic sample of either genre. The corpus is also imbalanced (536 vs 325 tracks), which could bias some analyses; the classifier uses stratified cross-validation to mitigate this. Finally, chroma and timbre analyses rely on Sonic Visualiser exports, which use specific algorithms (NNLS Chroma, libextract MFCCs) with their own assumptions about tuning and spectral resolution.</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>These limitations mean that the conclusions drawn here are indicative rather than definitive. They show what Spotify's feature space can and cannot capture about these genres, and the confidence in final conclusions is inherently limited by the accuracy of the assumptions described above.</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Genre Comparison at a Glance</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> corpus <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Genre) <span class="sc">|&gt;</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Tracks=</span><span class="fu">n</span>(), <span class="st">`</span><span class="at">Avg BPM</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Tempo,<span class="at">na.rm=</span>T),<span class="dv">1</span>), <span class="st">`</span><span class="at">Avg Energy</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Energy,<span class="at">na.rm=</span>T),<span class="dv">3</span>),</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Danceability</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Danceability,<span class="at">na.rm=</span>T),<span class="dv">3</span>), <span class="st">`</span><span class="at">Avg Valence</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Valence,<span class="at">na.rm=</span>T),<span class="dv">3</span>),</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Loudness (dB)</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Loudness,<span class="at">na.rm=</span>T),<span class="dv">1</span>))</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(summary_stats, <span class="at">options=</span><span class="fu">list</span>(<span class="at">dom=</span><span class="st">'t'</span>,<span class="at">ordering=</span>F, <span class="at">columnDefs=</span><span class="fu">list</span>(<span class="fu">list</span>(<span class="at">className=</span><span class="st">'dt-center'</span>,<span class="at">targets=</span><span class="st">'_all'</span>))),</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">rownames=</span>F, <span class="at">class=</span><span class="st">"table table-striped table-hover"</span>)</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Groove vs Aggression"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A Computational Musicology Portfolio"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: "Abel Vestering"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: "Universiteit van Amsterdam"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "29 March 2026"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  Computational Musicology · 2025/26 Semester 2, Period 1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">  Course code: 115215146Y · Instructor: John Ashley Burgoyne</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">"font-size:0.9rem; color:#7a8090; margin-top:-1rem; margin-bottom:2rem;"</span><span class="dt">&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Computational Musicology (115215146Y) · Universiteit van Amsterdam<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Instructor: John Ashley Burgoyne</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Can Machines Hear the Difference Between Groove and Aggression?</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>This project investigates whether the stylistic contrast between Minimal Tech House and Hard House, two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum, can be identified and quantified through computational audio features.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Using Spotify's track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like *groovy*, *hypnotic*, *aggressive*, and *relentless* into measurable musical data.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Central question</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Can the stylistic gap between two EDM subgenres be confirmed through computational evidence, and if so, which features carry the distinction?</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Two Playlists</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">"genre-tag minimal"</span><span class="dt">&gt;</span>Minimal Tech House<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>**Groovy Minimal House** contains 536 tracks from the intersection of Detroit techno and Chicago house. The genre is defined by *restraint*: stripped-back percussion, hypnotic basslines, and gradual textural development. Tempos typically sit between 120 and 128 BPM, and energy is sustained but never aggressive. I selected this playlist because it represents the groovy, hypnotic side of electronic music that I personally enjoy as a DJ and listener.</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">"genre-tag hard"</span><span class="dt">&gt;</span>Hard House<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>**Club Heartbroken** contains 325 tracks rooted in the UK rave scene. This genre pushes tempo, impact, and emotional intensity to the extreme: 138–150 BPM, aggressive kicks, and maximally compressed masters. I chose this playlist because it sits at the opposite end of the EDM spectrum, favouring maximum intensity over minimal restraint.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creative Process</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>As a DJ who plays both minimal and hard sets, I experience the contrast between these genres physically. Minimal Tech House makes you *sway*; it is music for sustained, hypnotic movement. Hard House makes you *jump*; it demands immediate, explosive energy. This project tests whether that embodied experience is computationally verifiable. Every analysis in this portfolio asks the same question: can the machine hear what the body already knows?</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Assumptions &amp; Limitations</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>Several assumptions underlie this analysis. Spotify's audio features are treated as ground truth, but they are black-box estimates. We do not know the exact algorithms behind features like "energy" or "danceability", and they may not capture what musicians or listeners mean by those terms. Both playlists were curated by individual users and reflect personal taste rather than a systematic sample of either genre. The corpus is also imbalanced (536 vs 325 tracks), which could bias some analyses; the classifier uses stratified cross-validation to mitigate this. Finally, chroma and timbre analyses rely on Sonic Visualiser exports, which use specific algorithms (NNLS Chroma, libextract MFCCs) with their own assumptions about tuning and spectral resolution.</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>These limitations mean that the conclusions drawn here are indicative rather than definitive. They show what Spotify's feature space can and cannot capture about these genres, and the confidence in final conclusions is inherently limited by the accuracy of the assumptions described above.</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Genre Comparison at a Glance</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> corpus <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Genre) <span class="sc">|&gt;</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Tracks=</span><span class="fu">n</span>(), <span class="st">`</span><span class="at">Avg BPM</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Tempo,<span class="at">na.rm=</span>T),<span class="dv">1</span>), <span class="st">`</span><span class="at">Avg Energy</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Energy,<span class="at">na.rm=</span>T),<span class="dv">3</span>),</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Danceability</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Danceability,<span class="at">na.rm=</span>T),<span class="dv">3</span>), <span class="st">`</span><span class="at">Avg Valence</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Valence,<span class="at">na.rm=</span>T),<span class="dv">3</span>),</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Loudness (dB)</span><span class="st">`</span><span class="ot">=</span><span class="fu">round</span>(<span class="fu">mean</span>(Loudness,<span class="at">na.rm=</span>T),<span class="dv">1</span>))</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(summary_stats, <span class="at">options=</span><span class="fu">list</span>(<span class="at">dom=</span><span class="st">'t'</span>,<span class="at">ordering=</span>F, <span class="at">columnDefs=</span><span class="fu">list</span>(<span class="fu">list</span>(<span class="at">className=</span><span class="st">'dt-center'</span>,<span class="at">targets=</span><span class="st">'_all'</span>))),</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">rownames=</span>F, <span class="at">class=</span><span class="st">"table table-striped table-hover"</span>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

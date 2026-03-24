@@ -13,6 +13,13 @@
 body { font-family: 'Source Sans 3', sans-serif !important; }
 h1,h2,h3,h4,h5,h6 { font-family: 'DM Sans', sans-serif !important; }
 
+/* Author and date */
+.quarto-title-meta { font-size: 1rem; color: var(--text); }
+.quarto-title-author-name { font-size: 1.25rem; font-weight: 700; font-family: 'DM Sans', sans-serif; color: var(--text-bright) !important; }
+.quarto-title-author-affiliation { font-size: 0.95rem; color: var(--text-muted); }
+.quarto-title .abstract { font-size: 0.88rem; color: var(--text-muted); font-style: normal; border-left: 3px solid var(--cyan); padding-left: 12px; margin-top: 0.5rem; }
+.quarto-title .abstract-title { display: none; }
+
 /* Sticky Navbar */
 .navbar {
   position: sticky !important; top: 0 !important; z-index: 1030 !important;

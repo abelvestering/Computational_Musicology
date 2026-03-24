@@ -9,7 +9,7 @@ source("setup.R")
 
 ## The Two Playlists
 
-The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists are embedded below for listening reference.
+The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists were exported using Exportify and enriched with Spotify's audio features via the API. The Groovy Minimal House playlist was selected for its representation of restrained, groove-driven electronic music, while Club Heartbroken captures the high-intensity side of the spectrum. Both playlists are embedded below for listening reference.
 
 ### Groovy Minimal House
 
@@ -28,6 +28,7 @@ The corpus consists of 861 tracks drawn from two Spotify playlists, each represe
 The table below contains all 861 tracks with their Spotify audio features. Use the column filters to search by genre, artist, or feature range.
 
 ```{r}
+#| echo: false
 corpus |> select(Genre,`Track Name`,`Artist Name(s)`,Tempo,Energy,Danceability,Valence,Loudness,Popularity) |>
   mutate(Tempo=round(Tempo,1),Energy=round(Energy,3),Danceability=round(Danceability,3),Valence=round(Valence,3),Loudness=round(Loudness,1)) |>
   datatable(filter="top",options=list(pageLength=15,scrollX=T,dom='frtip',columnDefs=list(list(className='dt-center',targets=3:8))),

@@ -123,35 +123,35 @@
     "href": "corpus.html",
     "title": "Corpus",
     "section": "",
-    "text": "The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists are embedded below for listening reference.\n\n\n536 tracks, hypnotic basslines, groove-driven repetition\n\n\n\n\n\n325 tracks, aggressive kicks, maximal compression"
+    "text": "The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists were exported using Exportify and enriched with Spotify’s audio features via the API. The Groovy Minimal House playlist was selected for its representation of restrained, groove-driven electronic music, while Club Heartbroken captures the high-intensity side of the spectrum. Both playlists are embedded below for listening reference.\n\n\n536 tracks, hypnotic basslines, groove-driven repetition\n\n\n\n\n\n325 tracks, aggressive kicks, maximal compression"
   },
   {
     "objectID": "corpus.html#the-two-playlists",
     "href": "corpus.html#the-two-playlists",
     "title": "Corpus",
     "section": "",
-    "text": "The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists are embedded below for listening reference.\n\n\n536 tracks, hypnotic basslines, groove-driven repetition\n\n\n\n\n\n325 tracks, aggressive kicks, maximal compression"
+    "text": "The corpus consists of 861 tracks drawn from two Spotify playlists, each representing one end of the EDM energy spectrum. Both playlists were exported using Exportify and enriched with Spotify’s audio features via the API. The Groovy Minimal House playlist was selected for its representation of restrained, groove-driven electronic music, while Club Heartbroken captures the high-intensity side of the spectrum. Both playlists are embedded below for listening reference.\n\n\n536 tracks, hypnotic basslines, groove-driven repetition\n\n\n\n\n\n325 tracks, aggressive kicks, maximal compression"
   },
   {
     "objectID": "corpus.html#full-corpus-explorer",
     "href": "corpus.html#full-corpus-explorer",
     "title": "Corpus",
     "section": "Full Corpus Explorer",
-    "text": "Full Corpus Explorer\nThe table below contains all 861 tracks with their Spotify audio features. Use the column filters to search by genre, artist, or feature range.\n\n\nShow code\ncorpus |&gt; select(Genre,`Track Name`,`Artist Name(s)`,Tempo,Energy,Danceability,Valence,Loudness,Popularity) |&gt;\n  mutate(Tempo=round(Tempo,1),Energy=round(Energy,3),Danceability=round(Danceability,3),Valence=round(Valence,3),Loudness=round(Loudness,1)) |&gt;\n  datatable(filter=\"top\",options=list(pageLength=15,scrollX=T,dom='frtip',columnDefs=list(list(className='dt-center',targets=3:8))),\n    class=\"table table-striped table-hover table-sm\",rownames=F)"
+    "text": "Full Corpus Explorer\nThe table below contains all 861 tracks with their Spotify audio features. Use the column filters to search by genre, artist, or feature range."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Groove vs Aggression",
     "section": "",
-    "text": "This project investigates whether the stylistic contrast between Minimal Tech House and Hard House, two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum, can be identified and quantified through computational audio features.\nUsing Spotify’s track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like groovy, hypnotic, aggressive, and relentless into measurable musical data.\n\n\n\n\n\n\nNoteCentral question\n\n\n\nCan the stylistic gap between two EDM subgenres be confirmed through computational evidence, and if so, which features carry the distinction?"
+    "text": "Computational Musicology (115215146Y) · Universiteit van Amsterdam Instructor: John Ashley Burgoyne"
   },
   {
     "objectID": "index.html#can-machines-hear-the-difference-between-groove-and-aggression",
     "href": "index.html#can-machines-hear-the-difference-between-groove-and-aggression",
     "title": "Groove vs Aggression",
-    "section": "",
-    "text": "This project investigates whether the stylistic contrast between Minimal Tech House and Hard House, two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum, can be identified and quantified through computational audio features.\nUsing Spotify’s track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like groovy, hypnotic, aggressive, and relentless into measurable musical data.\n\n\n\n\n\n\nNoteCentral question\n\n\n\nCan the stylistic gap between two EDM subgenres be confirmed through computational evidence, and if so, which features carry the distinction?"
+    "section": "Can Machines Hear the Difference Between Groove and Aggression?",
+    "text": "Can Machines Hear the Difference Between Groove and Aggression?\nThis project investigates whether the stylistic contrast between Minimal Tech House and Hard House, two EDM subgenres that share historical roots but occupy opposite ends of the energy spectrum, can be identified and quantified through computational audio features.\nUsing Spotify’s track-level features, chroma analysis, self-similarity matrices, key profiling, tempograms, and machine learning, we translate subjective genre descriptions like groovy, hypnotic, aggressive, and relentless into measurable musical data.\n\n\n\n\n\n\nNoteCentral question\n\n\n\nCan the stylistic gap between two EDM subgenres be confirmed through computational evidence, and if so, which features carry the distinction?"
   },
   {
     "objectID": "index.html#the-two-playlists",
@@ -179,7 +179,7 @@
     "href": "index.html#genre-comparison-at-a-glance",
     "title": "Groove vs Aggression",
     "section": "Genre Comparison at a Glance",
-    "text": "Genre Comparison at a Glance\n\n\nShow code\nsummary_stats &lt;- corpus |&gt; group_by(Genre) |&gt;\n  summarise(Tracks=n(), `Avg BPM`=round(mean(Tempo,na.rm=T),1), `Avg Energy`=round(mean(Energy,na.rm=T),3),\n    `Avg Danceability`=round(mean(Danceability,na.rm=T),3), `Avg Valence`=round(mean(Valence,na.rm=T),3),\n    `Avg Loudness (dB)`=round(mean(Loudness,na.rm=T),1))\ndatatable(summary_stats, options=list(dom='t',ordering=F, columnDefs=list(list(className='dt-center',targets='_all'))),\n  rownames=F, class=\"table table-striped table-hover\")"
+    "text": "Genre Comparison at a Glance"
   },
   {
     "objectID": "week8.html",
