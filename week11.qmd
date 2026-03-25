@@ -24,7 +24,7 @@ A histogram with 2 BPM bins compares the tempo distribution across both genres u
 # Overlaid histogram with 2 BPM bins to compare tempo distributions
 # position = "identity" overlays rather than stacks the bars
 ggplot(corpus, aes(x = Tempo, fill = Genre)) +
-  geom_histogram(binwidth = 2, alpha = 0.7, position = "identity") +
+  geom_histogram(binwidth = 2, alpha = 0.5, position = "identity") +
   scale_fill_manual(values = pal) +
   theme_freq(12) +
   labs(
@@ -49,21 +49,22 @@ Novelty functions are computed by Sonic Visualiser and measure the spectral flux
 # Load novelty curves exported from Sonic Visualiser
 # Columns: TIME (seconds), VALUE (spectral flux magnitude)
 hard_nov <- read_csv("mytrack-novelty.csv", col_names = c("TIME", "VALUE"),
-  show_col_types = FALSE) |> mutate(Genre = "Hard House")
+  show_col_types = FALSE) |> mutate(Genre = "Hard House: It Ain't Over")
 min_nov <- read_csv("minimal-novelty.csv", col_names = c("TIME", "VALUE"),
-  show_col_types = FALSE) |> mutate(Genre = "Minimal Tech House")
+  show_col_types = FALSE) |> mutate(Genre = "Minimal Tech House: Overflow (Kolter)")
 
 # Faceted line plot comparing the first 60 seconds of each track
 bind_rows(hard_nov, min_nov) |>
   ggplot(aes(x = TIME, y = VALUE, colour = Genre)) +
   geom_line(alpha = 0.8, linewidth = 0.4) +
-  scale_colour_manual(values = pal) +
+  scale_colour_manual(values = c("Hard House: It Ain't Over" = "#ff2d55",
+    "Minimal Tech House: Overflow (Kolter)" = "#00d4ff")) +
   facet_wrap(~Genre, ncol = 1, scales = "free_y") +
   xlim(0, 60) +
   theme_freq(11) +
   labs(
-    title = "Novelty Functions: First 60 Seconds",
-    subtitle = "Onset strength over time",
+    title = "Novelty Functions: It Ain't Over vs Overflow",
+    subtitle = "Onset strength over the first 60 seconds",
     x = "Time (s)", y = "Novelty", colour = NULL
   ) +
   theme(legend.position = "none")
@@ -94,7 +95,7 @@ read_csv("mytrack-act.csv", show_col_types = FALSE) |>
   scale_y_continuous(transform = c("reciprocal", "reverse"), breaks = seq(50, 350, 50)) +
   scale_fill_viridis_c(guide = "none") +
   theme_freq(11) + theme(panel.grid = element_blank()) +
-  labs(title = "ACT Tempogram: Hard House", x = "Time (s)", y = "Tempo (BPM)")
+  labs(title = "ACT Tempogram: It Ain't Over (Hard House)", x = "Time (s)", y = "Tempo (BPM)")
 ```
 
 ### DFT
@@ -112,7 +113,7 @@ read_csv("mytrack-dft.csv", show_col_types = FALSE) |>
   geom_raster() +
   scale_fill_viridis_c(guide = "none") +
   theme_freq(11) + theme(panel.grid = element_blank()) +
-  labs(title = "DFT Tempogram: Hard House", x = "Time (s)", y = "Tempo (BPM)")
+  labs(title = "DFT Tempogram: It Ain't Over (Hard House)", x = "Time (s)", y = "Tempo (BPM)")
 ```
 :::
 
@@ -128,7 +129,7 @@ read_csv("mytrack-dft.csv", show_col_types = FALSE) |>
 #| out-width: "100%"
 read_csv("minimal-act.csv",show_col_types=F)|>pivot_longer(-TIME,names_to="tempo")|>mutate(tempo=as.numeric(tempo))|>
   ggplot(aes(x=TIME,y=tempo,fill=value))+geom_raster()+scale_y_continuous(transform=c("reciprocal","reverse"),breaks=seq(50,350,50))+
-  scale_fill_viridis_c(guide="none")+theme_freq(11)+theme(panel.grid=element_blank())+labs(title="ACT Tempogram: Minimal Tech House",x="Time (s)",y="Tempo (BPM)")
+  scale_fill_viridis_c(guide="none")+theme_freq(11)+theme(panel.grid=element_blank())+labs(title="ACT Tempogram: Overflow (Minimal Tech House)",x="Time (s)",y="Tempo (BPM)")
 ```
 
 ### DFT
@@ -139,7 +140,7 @@ read_csv("minimal-act.csv",show_col_types=F)|>pivot_longer(-TIME,names_to="tempo
 #| out-width: "100%"
 read_csv("minimal-dft.csv",show_col_types=F)|>pivot_longer(-TIME,names_to="tempo")|>mutate(tempo=as.numeric(tempo))|>
   ggplot(aes(x=TIME,y=tempo,fill=value))+geom_raster()+scale_fill_viridis_c(guide="none")+
-  theme_freq(11)+theme(panel.grid=element_blank())+labs(title="DFT Tempogram: Minimal Tech House",x="Time (s)",y="Tempo (BPM)")
+  theme_freq(11)+theme(panel.grid=element_blank())+labs(title="DFT Tempogram: Overflow (Minimal Tech House)",x="Time (s)",y="Tempo (BPM)")
 ```
 :::
 

@@ -44,7 +44,7 @@ ggplot(wood_avg, aes(x = Pitch_Class, y = Intensity, fill = Intensity)) +
   )
 ```
 
-The bar chart shows the average intensity of each pitch class across the entire duration of *Wood*. A small number of pitch classes dominate clearly, while others are nearly absent. In EDM, where harmonic material is deliberately narrow and heavily reinforced through repetition, this profile acts as a compact fingerprint of tonal emphasis. The pronounced peaks connect directly to the loop-based patterns visible in the Week 9 chroma analysis: the same few notes that form the harmonic loop are the ones that accumulate the highest average intensity over time.
+The bar chart shows the average intensity of each pitch class across the entire duration of *Wood*. A small number of pitch classes dominate clearly, while others are nearly absent. The strongest peaks appear on F, C, and G, with secondary emphasis on Bb and Eb. This pattern is consistent with an F minor or Ab major tonality (which share the same pitch class set), though the absence of strong thirds makes it difficult to distinguish major from minor with certainty. In EDM, where harmonic material is deliberately narrow and heavily reinforced through repetition, this profile acts as a compact fingerprint of tonal emphasis. The pronounced peaks connect directly to the loop-based patterns visible in the Week 9 chroma analysis: the same few notes that form the harmonic loop are the ones that accumulate the highest average intensity over time.
 
 ## Keygram: Wood
 
@@ -74,6 +74,6 @@ ggplot(kl,aes(x=start+duration/2,width=duration,y=name,fill=d))+geom_tile()+
   theme(axis.text.y=element_text(size=7))
 ```
 
-The keygram matches the chroma content of each time window against all 24 major and minor key templates using the Krumhansl-Kessler profiles. Darker horizontal bands indicate keys that consistently match well throughout the track. For *Wood*, one or two keys dominate across the entire duration with no visible modulation; the dark bands remain stable from beginning to end. This is consistent with the block structure observed in the Week 9 SSM and shows that compositional form in this genre relies on harmonic repetition rather than harmonic development. In traditional tonal music, key changes serve as a primary structural device to create tension and resolution, but EDM takes a fundamentally different approach.
+The keygram matches the chroma content of each time window against all 24 major and minor key templates using the Krumhansl-Kessler profiles. Darker horizontal bands indicate keys that consistently match well throughout the track. For *Wood*, the darkest bands correspond to Ab major and F minor, both of which remain stable across the entire duration with no visible modulation. This aligns with the key profile above and confirms that the track stays in a single tonal region throughout. The absence of any key change is consistent with the block structure observed in the Week 9 SSM and shows that compositional form in this genre relies on harmonic repetition rather than harmonic development. In traditional tonal music, key changes serve as a primary structural device to create tension and resolution, but EDM takes a fundamentally different approach: tension is created through textural buildup and release rather than harmonic motion.
 
 
