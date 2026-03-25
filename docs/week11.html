@@ -184,8 +184,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#temporal-structure-and-rhythmic-organisation" id="toc-temporal-structure-and-rhythmic-organisation" class="nav-link active" data-scroll-target="#temporal-structure-and-rhythmic-organisation">Temporal Structure and Rhythmic Organisation</a></li>
   <li><a href="#corpus-tempo-distribution" id="toc-corpus-tempo-distribution" class="nav-link" data-scroll-target="#corpus-tempo-distribution">Corpus Tempo Distribution</a></li>
   <li><a href="#novelty-functions-first-60-seconds" id="toc-novelty-functions-first-60-seconds" class="nav-link" data-scroll-target="#novelty-functions-first-60-seconds">Novelty Functions: First 60 Seconds</a></li>
-  <li><a href="#tempograms-hard-house-it-aint-over" id="toc-tempograms-hard-house-it-aint-over" class="nav-link" data-scroll-target="#tempograms-hard-house-it-aint-over">Tempograms: Hard House (It Ain’t Over)</a></li>
-  <li><a href="#tempograms-minimal-tech-house-overflow" id="toc-tempograms-minimal-tech-house-overflow" class="nav-link" data-scroll-target="#tempograms-minimal-tech-house-overflow">Tempograms: Minimal Tech House (Overflow)</a>
+  <li><a href="#tempograms-it-aint-over-by-dj-heartstring-hard-house" id="toc-tempograms-it-aint-over-by-dj-heartstring-hard-house" class="nav-link" data-scroll-target="#tempograms-it-aint-over-by-dj-heartstring-hard-house">Tempograms: It Ain’t Over by DJ Heartstring (Hard House)</a></li>
+  <li><a href="#tempograms-overflow-by-kolter-minimal-tech-house" id="toc-tempograms-overflow-by-kolter-minimal-tech-house" class="nav-link" data-scroll-target="#tempograms-overflow-by-kolter-minimal-tech-house">Tempograms: Overflow by Kolter (Minimal Tech House)</a>
   <ul class="collapse">
   <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
   </ul></li>
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load novelty curves exported from Sonic Visualiser</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns: TIME (seconds), VALUE (spectral flux magnitude)</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>hard_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"mytrack-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Hard House: It Ain't Over"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Hard House: It Ain't Over (DJ Heartstring)"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>min_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"minimal-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Minimal Tech House: Overflow (Kolter)"</span>)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(hard_nov, min_nov) <span class="sc">|&gt;</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> VALUE, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Hard House: It Ain't Over"</span> <span class="ot">=</span> <span class="st">"#ff2d55"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Hard House: It Ain't Over (DJ Heartstring)"</span> <span class="ot">=</span> <span class="st">"#ff2d55"</span>,</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Minimal Tech House: Overflow (Kolter)"</span> <span class="ot">=</span> <span class="st">"#00d4ff"</span>)) <span class="sc">+</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">60</span>) <span class="sc">+</span></span>
@@ -287,10 +287,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. Hard House (<em>It Ain’t Over</em>) shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Minimal Tech House (<em>Overflow</em>) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.</p>
+<p>The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. DJ Heartstring’s <em>It Ain’t Over</em> shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Kolter’s <em>Overflow</em> shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.</p>
 </section>
-<section id="tempograms-hard-house-it-aint-over" class="level2">
-<h2 class="anchored" data-anchor-id="tempograms-hard-house-it-aint-over">Tempograms: Hard House (It Ain’t Over)</h2>
+<section id="tempograms-it-aint-over-by-dj-heartstring-hard-house" class="level2">
+<h2 class="anchored" data-anchor-id="tempograms-it-aint-over-by-dj-heartstring-hard-house">Tempograms: It Ain’t Over by DJ Heartstring (Hard House)</h2>
 <p>Tempograms visualise how rhythmic energy is distributed across different tempo frequencies over time. The ACT (autocorrelation) method detects periodicity in the onset signal, while the DFT (Fourier) method captures harmonic structure in the rhythm. Both are rendered as heatmaps using <code>geom_raster</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">ACT</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">DFT</a></li></ul>
@@ -346,8 +346,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="tempograms-minimal-tech-house-overflow" class="level2">
-<h2 class="anchored" data-anchor-id="tempograms-minimal-tech-house-overflow">Tempograms: Minimal Tech House (Overflow)</h2>
+<section id="tempograms-overflow-by-kolter-minimal-tech-house" class="level2">
+<h2 class="anchored" data-anchor-id="tempograms-overflow-by-kolter-minimal-tech-house">Tempograms: Overflow by Kolter (Minimal Tech House)</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">ACT</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">DFT</a></li></ul>
 <div class="tab-content">
@@ -901,7 +901,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Load novelty curves exported from Sonic Visualiser</span></span>
 <span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns: TIME (seconds), VALUE (spectral flux magnitude)</span></span>
 <span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>hard_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"mytrack-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Hard House: It Ain't Over"</span>)</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Hard House: It Ain't Over (DJ Heartstring)"</span>)</span>
 <span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>min_nov <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"minimal-novelty.csv"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"TIME"</span>, <span class="st">"VALUE"</span>),</span>
 <span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Genre =</span> <span class="st">"Minimal Tech House: Overflow (Kolter)"</span>)</span>
 <span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
@@ -909,7 +909,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(hard_nov, min_nov) <span class="sc">|&gt;</span></span>
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> TIME, <span class="at">y =</span> VALUE, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Hard House: It Ain't Over"</span> <span class="ot">=</span> <span class="st">"#ff2d55"</span>,</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Hard House: It Ain't Over (DJ Heartstring)"</span> <span class="ot">=</span> <span class="st">"#ff2d55"</span>,</span>
 <span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Minimal Tech House: Overflow (Kolter)"</span> <span class="ot">=</span> <span class="st">"#00d4ff"</span>)) <span class="sc">+</span></span>
 <span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
 <span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">60</span>) <span class="sc">+</span></span>
@@ -922,9 +922,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
 <span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. Hard House (*It Ain't Over*) shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Minimal Tech House (*Overflow*) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. DJ Heartstring's *It Ain't Over* shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Kolter's *Overflow* shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.</span>
 <span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tempograms: Hard House (It Ain't Over)</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tempograms: It Ain't Over by DJ Heartstring (Hard House)</span></span>
 <span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>Tempograms visualise how rhythmic energy is distributed across different tempo frequencies over time. The ACT (autocorrelation) method detects periodicity in the onset signal, while the DFT (Fourier) method captures harmonic structure in the rhythm. Both are rendered as heatmaps using <span class="in">`geom_raster`</span>.</span>
 <span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
@@ -969,7 +969,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tempograms: Minimal Tech House (Overflow)</span></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tempograms: Overflow by Kolter (Minimal Tech House)</span></span>
 <span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
 <span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a></span>

@@ -49,7 +49,7 @@ Novelty functions are computed by Sonic Visualiser and measure the spectral flux
 # Load novelty curves exported from Sonic Visualiser
 # Columns: TIME (seconds), VALUE (spectral flux magnitude)
 hard_nov <- read_csv("mytrack-novelty.csv", col_names = c("TIME", "VALUE"),
-  show_col_types = FALSE) |> mutate(Genre = "Hard House: It Ain't Over")
+  show_col_types = FALSE) |> mutate(Genre = "Hard House: It Ain't Over (DJ Heartstring)")
 min_nov <- read_csv("minimal-novelty.csv", col_names = c("TIME", "VALUE"),
   show_col_types = FALSE) |> mutate(Genre = "Minimal Tech House: Overflow (Kolter)")
 
@@ -57,7 +57,7 @@ min_nov <- read_csv("minimal-novelty.csv", col_names = c("TIME", "VALUE"),
 bind_rows(hard_nov, min_nov) |>
   ggplot(aes(x = TIME, y = VALUE, colour = Genre)) +
   geom_line(alpha = 0.8, linewidth = 0.4) +
-  scale_colour_manual(values = c("Hard House: It Ain't Over" = "#ff2d55",
+  scale_colour_manual(values = c("Hard House: It Ain't Over (DJ Heartstring)" = "#ff2d55",
     "Minimal Tech House: Overflow (Kolter)" = "#00d4ff")) +
   facet_wrap(~Genre, ncol = 1, scales = "free_y") +
   xlim(0, 60) +
@@ -70,9 +70,9 @@ bind_rows(hard_nov, min_nov) |>
   theme(legend.position = "none")
 ```
 
-The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. Hard House (*It Ain't Over*) shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Minimal Tech House (*Overflow*) shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.
+The novelty functions capture how abruptly the spectral content changes over time, which closely tracks rhythmic onsets. DJ Heartstring's *It Ain't Over* shows a pattern of sharp, evenly-spaced peaks with high amplitude, a direct reflection of its relentless four-on-the-floor kick drum pattern where every beat hits hard. Kolter's *Overflow* shows a more irregular pattern with lower peak amplitude, consistent with its approach of gradual, texture-based development where rhythmic elements are layered subtly rather than delivered with force.
 
-## Tempograms: Hard House (It Ain't Over)
+## Tempograms: It Ain't Over by DJ Heartstring (Hard House)
 
 Tempograms visualise how rhythmic energy is distributed across different tempo frequencies over time. The ACT (autocorrelation) method detects periodicity in the onset signal, while the DFT (Fourier) method captures harmonic structure in the rhythm. Both are rendered as heatmaps using `geom_raster`.
 
@@ -117,7 +117,7 @@ read_csv("mytrack-dft.csv", show_col_types = FALSE) |>
 ```
 :::
 
-## Tempograms: Minimal Tech House (Overflow)
+## Tempograms: Overflow by Kolter (Minimal Tech House)
 
 ::: {.panel-tabset}
 

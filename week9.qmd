@@ -133,7 +133,7 @@ ggplot(ssm_t, aes(x = TimeX, y = TimeY, fill = Distance)) +
 
 Comparing the two SSMs shows that harmonic and timbral structure can diverge significantly within the same track. The chroma SSM has clean, well-defined repetition blocks: the chorus chord progressions return predictably, producing a regular checkerboard-like pattern. The timbre SSM, by contrast, is noisier and more irregular. Even during harmonically identical sections, the texture shifts as vocal intensity varies, drum patterns change, and the arrangement evolves. A track can be harmonically stable while remaining texturally dynamic, and chroma and timbre illuminate fundamentally different dimensions of musical structure. Using only one of these features would give an incomplete picture.
 
-## Cepstrogram: East Bridge Romance
+## Cepstrogram: East Bridge Romance (DJ Heartstring & Narciss)
 
 A cepstrogram visualises the Mel Frequency Cepstral Coefficients (MFCCs) of a track over time. MFCCs capture timbral properties of the audio signal: the first coefficients describe the overall spectral shape (brightness, warmth), while higher coefficients capture finer textural details. Each coefficient is independently scaled to its own range so that variation within each MFCC is visible. This cepstrogram analyses *East Bridge Romance*, a Hard House track from the corpus, connecting the timbre analysis directly to the chroma analysis in Week 8.
 

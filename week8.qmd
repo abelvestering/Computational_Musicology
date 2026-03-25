@@ -93,7 +93,7 @@ ggplot(corpus, aes(x = Genre, y = Loudness, fill = Genre)) +
 
 The violin plot makes the distributional difference even clearer than the density plot above. Hard House tracks are tightly compressed into a narrow band around −6 dB, with very few outliers. The median sits noticeably higher than Minimal Tech House, whose distribution is wider and centred around −10 dB. The narrowness of the Hard House violin reflects a genre-wide mastering convention: every track is pushed to a similar loudness ceiling. Minimal Tech House allows for more variation, which is consistent with its emphasis on dynamics and textural subtlety rather than raw impact.
 
-## Chroma Features: East Bridge Romance
+## Chroma Features: East Bridge Romance (DJ Heartstring & Narciss)
 
 The chromagram is generated from NNLS Chroma features exported via Sonic Visualiser. Each row represents a pitch class (C through B), and each column a time frame. Intensity is mapped to colour using the viridis palette, producing a heatmap of harmonic activity over time.
 
